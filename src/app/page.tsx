@@ -1,6 +1,4 @@
 import { Metadata } from "next";
-import GroceryThreePageView from "pages-sections/grocery-3/page-view/grocery-3";
-import IndexPageView from "pages-sections/landing/page-view";
 import HomePage from "./(main)/page";
 
 export const metadata: Metadata = {

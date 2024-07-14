@@ -9,5 +9,5 @@ export const metadata: Metadata = {
 };
 
 export default async function HomePage() {
-    return <p>Hello</p>;
+    return <p>Homepage content will be here.</p>;
 }

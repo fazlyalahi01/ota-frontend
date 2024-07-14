@@ -1,3 +1,4 @@
+import { Box } from "@mui/material";
 import ShopLayout1 from "components/layouts/shop-layout-1";
 import { PropsWithChildren } from "react";
 

@@ -16,6 +16,7 @@ import ProgressBar from "components/progress";
 // IMPORT i18n SUPPORT FILE
 import "i18n";
 import ShopLayout1 from "components/layouts/shop-layout-1";
+import { Box } from "@mui/material";
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (

@@ -2,13 +2,12 @@
 
 import { Fragment, PropsWithChildren, useCallback, useState } from "react";
 // GLOBAL CUSTOM COMPONENTS
-import Sticky from "components/sticky";
-import Topbar from "components/topbar";
-import { Navbar } from "components/navbar";
 import { Footer1 } from "components/footer";
 import Header from "components/header/header";
-import { SearchInputWithCategory } from "components/search-box";
 import { MobileNavigationBar } from "components/mobile-navigation";
+import NavigationList from "components/navbar/nav-list/nav-list";
+import Sticky from "components/sticky";
+import Topbar from "components/topbar";
 
 /**
  *  USED IN:
@@ -25,9 +24,8 @@ export default function ShopLayout1({ children }: PropsWithChildren) {
     <Fragment>
       <Topbar />
       <Sticky fixedOn={0} onSticky={toggleIsFixed} scrollDistance={300}>
-        <Header isFixed={isFixed} midSlot={<SearchInputWithCategory />} />
+        <Header isFixed={isFixed} midSlot={<NavigationList />} />
       </Sticky>
-      <Navbar elevation={0} border={1} />
       {children}
       <MobileNavigationBar />
       <Footer1 />

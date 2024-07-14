@@ -13,7 +13,7 @@ import { Heading } from "./styles";
 
 export default function Footer1() {
   return (
-    <Box component="footer" bgcolor="#222935" mb={{ sm: 0, xs: 7 }}>
+    <Box component="footer" bgcolor="grey.800" mb={{ sm: 0, xs: 7 }}>
       <Box component={Container} color="white" overflow="hidden" py={{ sm: 10, xs: 4 }}>
         <Grid container spacing={3}>
           <Grid item lg={4} md={6} sm={6} xs={12}>

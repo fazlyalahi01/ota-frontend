@@ -38,14 +38,11 @@ export default function MobileHeader() {
 
         {/* MIDDLE CONTENT - LOGO */}
         <Link href="/">
-          <Image height={44} src="/assets/images/bazaar-black-sm.svg" alt="logo" />
+          <Image height={44} src="/assets/images/logo.png" alt="logo" />
         </Link>
 
         {/* RIGHT CONTENT - LOGIN, CART, SEARCH BUTTON */}
-        <FlexBox justifyContent="end" flex={1}>
-          <IconButton onClick={toggleSearchBar}>
-            <Icon.Search sx={ICON_STYLE} />
-          </IconButton>
+        <FlexBox justifyContent="end" flex={1}>          
 
           <IconButton onClick={toggleDialog}>
             <Icon.User sx={ICON_STYLE} />

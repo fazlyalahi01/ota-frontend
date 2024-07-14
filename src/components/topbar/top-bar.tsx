@@ -1,22 +1,18 @@
 import Link from "next/link";
 import { useState } from "react";
 // MUI
-import MenuItem from "@mui/material/MenuItem";
 import IconButton from "@mui/material/IconButton";
-import TouchRipple from "@mui/material/ButtonBase";
 // TRANSLATION
 import { useTranslation } from "react-i18next";
 // MUI ICON COMPONENTS
 import Add from "@mui/icons-material/Add";
-import Remove from "@mui/icons-material/Remove";
-import Twitter from "@mui/icons-material/Twitter";
 import Facebook from "@mui/icons-material/Facebook";
 import Instagram from "@mui/icons-material/Instagram";
-import ExpandMore from "@mui/icons-material/ExpandMore";
+import Remove from "@mui/icons-material/Remove";
+import Twitter from "@mui/icons-material/Twitter";
 // GLOBAL CUSTOM COMPONENTS
-import { Span } from "components/Typography";
-import BazaarMenu from "components/BazaarMenu";
 import { FlexBetween, FlexBox } from "components/flex-box";
+import { Span } from "components/Typography";
 // STYLED COMPONENTS
 import { StyledChip, StyledContainer, StyledRoot } from "./styles";
 
@@ -50,8 +46,6 @@ export default function Topbar({ bgColor }: Props) {
     i18n.changeLanguage(language);
   };
 
-  const selectedLanguage = languageOptions[i18n.language];
-
   return (
     <StyledRoot bgColor={bgColor} expand={expand ? 1 : 0}>
       <StyledContainer>
@@ -66,29 +60,7 @@ export default function Topbar({ bgColor }: Props) {
           </IconButton>
         </FlexBetween>
 
-        <FlexBox className="topbarRight" alignItems="center">
-          {/* LANGUAGE MENU SELECTOR */}
-          <BazaarMenu
-            handler={(e) => (
-              <TouchRipple className="handler marginRight" onClick={e}>
-                <Span className="menuTitle">{selectedLanguage.title}</Span>
-                <ExpandMore fontSize="inherit" />
-              </TouchRipple>
-            )}
-            options={(onClose) => {
-              return Object.keys(languageOptions).map((language: string) => (
-                <MenuItem
-                  className="menuItem"
-                  key={languageOptions[language].title}
-                  onClick={() => {
-                    handleChangeLanguage(language);
-                    onClose();
-                  }}>
-                  <Span className="menuTitle">{languageOptions[language].title}</Span>
-                </MenuItem>
-              ));
-            }}
-          />
+        <FlexBox className="topbarRight" alignItems="center">         
 
           {/* SOCIAL LINKS AREA */}
           <FlexBox alignItems="center" gap={1.5}>
