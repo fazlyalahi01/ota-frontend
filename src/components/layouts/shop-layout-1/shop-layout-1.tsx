@@ -23,24 +23,13 @@ export default function ShopLayout1({ children }: PropsWithChildren) {
 
   return (
     <Fragment>
-      {/* TOP BAR SECTION */}
       <Topbar />
-
-      {/* HEADER */}
       <Sticky fixedOn={0} onSticky={toggleIsFixed} scrollDistance={300}>
         <Header isFixed={isFixed} midSlot={<SearchInputWithCategory />} />
       </Sticky>
-
-      {/* NAVIGATION BAR */}
       <Navbar elevation={0} border={1} />
-
-      {/* BODY CONTENT */}
       {children}
-
-      {/* SMALL DEVICE BOTTOM NAVIGATION */}
       <MobileNavigationBar />
-
-      {/* FOOTER */}
       <Footer1 />
     </Fragment>
   );
