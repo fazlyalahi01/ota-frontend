@@ -25,7 +25,6 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           <SettingsProvider>
             <ThemeProvider>
               <ProgressBar />
-              <p>root layout</p>
               <RTL>
                 {children}
               </RTL>

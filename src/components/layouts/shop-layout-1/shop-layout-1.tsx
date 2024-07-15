@@ -26,7 +26,6 @@ console.log("inside  shop layout 1");
       <Sticky fixedOn={0} onSticky={toggleIsFixed} scrollDistance={300}>
         <Header isFixed={isFixed} midSlot={<NavigationList />} />
       </Sticky>
-      homepage layout
       {children}
       <MobileNavigationBar />
       <Footer1 />
