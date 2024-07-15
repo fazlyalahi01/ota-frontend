@@ -19,13 +19,14 @@ import Topbar from "components/topbar";
 export default function ShopLayout1({ children }: PropsWithChildren) {
   const [isFixed, setIsFixed] = useState(false);
   const toggleIsFixed = useCallback((fixed: boolean) => setIsFixed(fixed), []);
-
+console.log("inside  shop layout 1");
   return (
     <Fragment>
       <Topbar />
       <Sticky fixedOn={0} onSticky={toggleIsFixed} scrollDistance={300}>
         <Header isFixed={isFixed} midSlot={<NavigationList />} />
       </Sticky>
+      homepage layout
       {children}
       <MobileNavigationBar />
       <Footer1 />

@@ -42,7 +42,7 @@ export default function AuthLayout({ children }: PropsWithChildren) {
   }
 
   return (
-    <FlexRowCenter flexDirection="column" minHeight="100vh" px={2}>
+    <FlexRowCenter flexDirection="column" minHeight="100vh" px={2}>      
       <Wrapper elevation={3}>
         {/* LOGO WITH TITLE AREA */}
         <LogoWithTitle />
@@ -55,7 +55,7 @@ export default function AuthLayout({ children }: PropsWithChildren) {
 
         {/* RENDER BOTTOM CONTENT BASED ON CONDITION */}
         {BOTTOM_CONTENT}
-      </Wrapper>
+      </Wrapper>      
     </FlexRowCenter>
   );
 }

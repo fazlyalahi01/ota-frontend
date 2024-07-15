@@ -8,6 +8,6 @@ export const metadata: Metadata = {
     keywords: ["e-commerce", "e-commerce template", "next.js", "react"]
 };
 
-export default async function HomePage() {
+export default async function HomePageForMainLayout() {
     return <p>Homepage content will be here.</p>;
 }
