@@ -9,6 +9,8 @@ import EyeToggleButton from "../components/eye-toggle-button";
 import usePasswordVisible from "../use-password-visible";
 // GLOBAL CUSTOM COMPONENTS
 import BazaarTextField from "components/BazaarTextField";
+import { signIn } from "../../../../auth";
+import { loginAction } from "actions/login-action";
 
 // ==============================================================
 interface Props {
@@ -28,14 +30,25 @@ const LoginPageView = ({ closeDialog }: Props) => {
     email: yup.string().email("invalid email").required("Email is required")
   });
 
-  const { values, errors, touched, handleBlur, handleChange, handleSubmit } = useFormik({
+  const { values, errors, touched, handleBlur, handleChange } = useFormik({
     initialValues,
     validationSchema,
     onSubmit: (values) => {
       console.log(values);
+
       closeDialog?.();
     }
   });
+
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const formData = new FormData(event.currentTarget);
+    try {
+      await loginAction(formData);
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   return (
     <form onSubmit={handleSubmit}>
