@@ -10,6 +10,7 @@ import MultiLevelMenu from "./multi-level-menu";
 import { useLayout } from "../dashboard-layout-context";
 // STYLED COMPONENT
 import { SidebarWrapper } from "./styles";
+import LogoWhite from "components/utils/logo-white";
 
 export default function DashboardSidebar() {
   const {
@@ -26,13 +27,7 @@ export default function DashboardSidebar() {
     return (
       <LayoutDrawer open={showMobileSideBar ? true : false} onClose={handleCloseMobileSidebar}>
         <Box p={2} maxHeight={TOP_HEADER_AREA}>
-          <Image
-            alt="Logo"
-            width={105}
-            height={50}
-            src="/assets/images/logo.svg"
-            style={{ marginLeft: 8 }}
-          />
+          <LogoWhite />
         </Box>
 
         <MultiLevelMenu />

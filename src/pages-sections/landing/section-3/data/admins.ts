@@ -2,7 +2,7 @@ export default [
   {
     imgUrl: "/assets/images/landing/vendor/dashboard.jpg",
     previewUrl: "/vendor/dashboard",
-    title: "Dashboard",
+    title: "Dashboardd",
     status: "New",
     page: "admin"
   },
