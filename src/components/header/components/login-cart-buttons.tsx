@@ -6,6 +6,9 @@ import PersonOutline from "@mui/icons-material/PersonOutline";
 import ShoppingBagOutlined from "icons/ShoppingBagOutlined";
 // GLOBAL CUSTOM HOOK
 import useCart from "hooks/useCart";
+import useAuth from "hooks/useAuth";
+import ProfilePopover from "components/main/ProfilePopover";
+import { Stack } from "@mui/material";
 
 // ==============================================================
 interface Props {
@@ -16,20 +19,20 @@ interface Props {
 
 export default function LoginCartButtons({ toggleDialog, toggleSidenav }: Props) {
   const { state } = useCart();
+  const { userInfo, isLogin, logout } = useAuth();
+  console.log(userInfo, isLogin, logout);
 
   const ICON_COLOR = { color: "grey.600" };
 
   return (
-    <div>
-      <IconButton onClick={toggleDialog}>
-        <PersonOutline sx={ICON_COLOR} />
-      </IconButton>
+    <Stack direction="row" spacing={2} alignItems="end" justifyContent="center">
+      <ProfilePopover />
 
-      <Badge badgeContent={state.cart.length} color="primary">
+      {isLogin && <Badge badgeContent={state.cart.length} color="primary">
         <IconButton onClick={toggleSidenav}>
           <ShoppingBagOutlined sx={ICON_COLOR} />
         </IconButton>
-      </Badge>
-    </div>
+      </Badge>}
+    </Stack>
   );
 }

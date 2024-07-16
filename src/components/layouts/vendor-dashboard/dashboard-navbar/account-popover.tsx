@@ -8,6 +8,8 @@ import styled from "@mui/material/styles/styled";
 import IconButton from "@mui/material/IconButton";
 // GLOBAL CUSTOM COMPONENTS
 import { H6, Small } from "components/Typography";
+import useAuth from "hooks/useAuth";
+import Link from "next/link";
 
 // STYLED COMPONENT
 const Divider = styled("div")(({ theme }) => ({
@@ -18,6 +20,8 @@ const Divider = styled("div")(({ theme }) => ({
 export default function AccountPopover() {
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
+  const { userInfo: { user }, isLogin, logout } = useAuth();
+
 
   const handleClose = () => setAnchorEl(null);
 
@@ -72,17 +76,36 @@ export default function AccountPopover() {
             }
           }
         }}>
-        <Box px={2} pt={1}>
-          <H6>Gage Paquette</H6>
-          <Small color="grey.500">Admin</Small>
-        </Box>
+        {isLogin ? (
+          <>
+            <Box px={2} pt={1}>
+              <H6 style={{ textTransform: 'capitalize' }}>{user?.first_name}</H6>
+              <Small >{user?.email}</Small> <br />
+              <Small color="grey.500">Admin</Small>
+            </Box>
 
-        <Divider />
-        <MenuItem>Profile</MenuItem>
-        <MenuItem>My Orders</MenuItem>
-        <MenuItem>Settings</MenuItem>
-        <Divider />
-        <MenuItem>Logout</MenuItem>
+            <Divider />
+            <MenuItem>
+              <Link href="/">
+                Visit Website
+              </Link>
+            </MenuItem>
+            <MenuItem href="/dashboard">Profile</MenuItem>
+            <Divider />
+            <MenuItem onClick={logout}>Logout</MenuItem>
+          </>
+        ) : (
+          <>
+            <Box px={2} pt={1}>
+              <H6 style={{ textTransform: 'capitalize' }}>Hey Guest</H6>
+              <Small >Login & Get exclusive deals</Small> <br />
+              <Divider />
+              <MenuItem href="/login">
+                <Link href="/login">Login</Link>
+              </MenuItem>
+            </Box>
+          </>
+        )}
       </Menu>
     </div>
   );

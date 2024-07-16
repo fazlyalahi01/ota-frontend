@@ -41,13 +41,15 @@ export default function Header({ isFixed, className, midSlot }: Props) {
         {isFixed ? <CategoriesMenu /> : null}
       </FlexBox>
 
-      {/* SEARCH FORM | NAVIGATION */}
+      {/*  NAVIGATION */}
       {midSlot}
 
       {/* LOGIN AND CART BUTTON */}
       <LoginCartButtons toggleDialog={toggleDialog} toggleSidenav={toggleSidenav} />
 
       {/* LOGIN FORM DIALOG AND CART SIDE BAR  */}
+
+      
       <DialogDrawer
         dialogOpen={dialogOpen}
         sidenavOpen={sidenavOpen}

@@ -16,21 +16,24 @@ import ProgressBar from "components/progress";
 import ShopLayout1 from "components/layouts/shop-layout-1";
 import "i18n";
 import RTL from "components/rtl";
+import { AuthProvider } from "contexts/AuthContext";
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={openSans.className}>
-        <CartProvider>
-          <SettingsProvider>
-            <ThemeProvider>
-              <ProgressBar />
-              <RTL>
-                {children}
-              </RTL>
-            </ThemeProvider>
-          </SettingsProvider>
-        </CartProvider>
+        <AuthProvider>
+          <CartProvider>
+            <SettingsProvider>
+              <ThemeProvider>
+                <ProgressBar />
+                <RTL>
+                  {children}
+                </RTL>
+              </ThemeProvider>
+            </SettingsProvider>
+          </CartProvider>
+        </AuthProvider>
       </body>
     </html>
   );

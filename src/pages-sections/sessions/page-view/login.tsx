@@ -9,8 +9,7 @@ import EyeToggleButton from "../components/eye-toggle-button";
 import usePasswordVisible from "../use-password-visible";
 // GLOBAL CUSTOM COMPONENTS
 import BazaarTextField from "components/BazaarTextField";
-import { signIn } from "../../../../auth";
-import { loginAction } from "actions/login-action";
+import useAuth from "hooks/useAuth";
 
 // ==============================================================
 interface Props {
@@ -20,6 +19,7 @@ interface Props {
 
 const LoginPageView = ({ closeDialog }: Props) => {
   const { visiblePassword, togglePasswordVisible } = usePasswordVisible();
+  const { login} = useAuth()
 
   // LOGIN FORM FIELDS INITIAL VALUES
   const initialValues = { email: "", password: "" };
@@ -30,25 +30,15 @@ const LoginPageView = ({ closeDialog }: Props) => {
     email: yup.string().email("invalid email").required("Email is required")
   });
 
-  const { values, errors, touched, handleBlur, handleChange } = useFormik({
+  const { values, errors, touched, handleBlur, handleChange , handleSubmit} = useFormik({
     initialValues,
     validationSchema,
-    onSubmit: (values) => {
-      console.log(values);
+    onSubmit:async(values) => {
+      await login(values.email, values.password, ()=> {}, (error) => {} )
 
       closeDialog?.();
     }
   });
-
-  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    const formData = new FormData(event.currentTarget);
-    try {
-      await loginAction(formData);
-    } catch (error) {
-      console.log(error);
-    }
-  }
 
   return (
     <form onSubmit={handleSubmit}>
