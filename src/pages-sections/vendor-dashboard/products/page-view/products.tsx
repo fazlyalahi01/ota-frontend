@@ -15,37 +15,34 @@ import useMuiTable from "hooks/useMuiTable";
 import ProductRow from "../product-row";
 import SearchArea from "../../search-box";
 import PageWrapper from "../../page-wrapper";
+import { IProduct } from "models/Product.model";
 // CUSTOM DATA MODEL
-import Product from "models/Product.model";
 
 // TABLE HEADING DATA LIST
 const tableHeading = [
   { id: "name", label: "Name", align: "left" },
-  { id: "category", label: "Category", align: "left" },
-  { id: "brand", label: "Brand", align: "left" },
-  { id: "price", label: "Price", align: "left" },
-  { id: "published", label: "Published", align: "left" },
+  { id: "property_type", label: "Property Type", align: "left" },
+  { id: "insert_ts", label: "Created at", align: "left" },
+  { id: "property_city", label: "City", align: "left" },
+  { id: "property_state", label: "State", align: "left" },
   { id: "action", label: "Action", align: "center" }
 ];
 
 // =============================================================================
-type Props = { products: Product[] };
+type Props = { products: IProduct[] };
 // =============================================================================
 
 export default function ProductsPageView({ products }: Props) {
-  const [productList, setProductList] = useState([...products]);
+  const [productList, setProductList] = useState<IProduct[]>([...products]);
+
+  console.log(productList, "products");
 
   // RESHAPE THE PRODUCT LIST BASED TABLE HEAD CELL ID
-  const filteredProducts = productList.map((item) => ({
-    id: item.id,
-    slug: item.slug,
-    name: item.title,
-    brand: item.brand,
-    price: item.price,
-    image: item.thumbnail,
-    published: item.published,
-    category: item.categories[0]
-  }));
+  // const filteredProducts = productList.map((item) => ({
+  //   property_details_uuid: item.property_details_uuid,
+  //   property_details_name: item.property_details_name,
+  //   insert_ts: item.insert_ts,    
+  // }));
 
   const {
     order,
@@ -55,15 +52,15 @@ export default function ProductsPageView({ products }: Props) {
     filteredList,
     handleChangePage,
     handleRequestSort
-  } = useMuiTable({ listData: filteredProducts });
+  } = useMuiTable({ listData: productList });
 
   return (
-    <PageWrapper title="Product List">
+    <PageWrapper title="Property List">
       <SearchArea
         handleSearch={() => {}}
-        buttonText="Add Product"
-        url="/admin/products/create"
-        searchPlaceholder="Search Product..."
+        buttonText="Add Property"
+        url="/property/properties/manage-property"
+        searchPlaceholder="Search Property..."
       />
 
       <Card>
@@ -81,7 +78,7 @@ export default function ProductsPageView({ products }: Props) {
               />
 
               <TableBody>
-                {filteredList.map((product, index) => (
+                {productList.map((product, index) => (
                   <ProductRow key={index} product={product} />
                 ))}
               </TableBody>

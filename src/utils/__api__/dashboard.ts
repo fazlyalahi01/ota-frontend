@@ -5,6 +5,7 @@ import Order from "models/Order.model";
 import Review from "models/Review.model";
 import Product from "models/Product.model";
 import Category from "models/Category.model";
+import { api } from "api/api";
 
 // dashboard
 const getAllCard = cache(async () => {
@@ -14,7 +15,8 @@ const getAllCard = cache(async () => {
 
 const recentPurchase = cache(async () => {
   const response = await axios.get("/api/admin/recent-purchase");
-  return response.data;
+  console.log(response)
+  return response.data.data;
 });
 
 const stockOutProducts = cache(async () => {
@@ -24,8 +26,8 @@ const stockOutProducts = cache(async () => {
 
 // products
 const products = cache(async (): Promise<Product[]> => {
-  const response = await axios.get("/api/admin/products");
-  return response.data;
+  const response = await api.get("/property/get-property");
+  return response.data.data;
 });
 
 const category = cache(async (): Promise<Category[]> => {
