@@ -5,11 +5,11 @@ export const navigation = [
   { name: "Dashboard", icon: duotone.Dashboard, path: "/property/dashboard" },
 
   {
-    name: "Products",
+    name: "Properties",
     icon: duotone.Products,
     children: [
       { name: "Properties", path: "/property/properties" },
-      { name: "Create Product", path: "/property/properties/manage-property" },
+      { name: "Create Property", path: "/property/properties/manage-property" },
       { name: "Property Reviews", path: "/property/properties/reviews" }
     ]
   },

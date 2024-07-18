@@ -41,6 +41,7 @@ export const LocationAutoComplete = (props: ILocationAutoCompleteProps) => (
           try {
             // Get the detailed place information using the placeId
             const response = await geocodeByPlaceId(placeId);
+
             const { address_components } = response[0];
 
             let address = "";
@@ -48,6 +49,8 @@ export const LocationAutoComplete = (props: ILocationAutoCompleteProps) => (
             let state = "";
             let country = "";
             let zipCode = "";
+
+            console.log(address, city, state, country, zipCode)
 
             // Extract city, state, country, zip code, and address from the address_components
             for (const component of address_components) {

@@ -5,8 +5,9 @@ export function middleware(request: NextRequest) {
     const token = request.cookies.get('token');
     const protectedRoutes =
         [
-            '/vendor',
-            '/dashboard'
+            '/property',
+            '/dashboard',
+
         ];
     const path = request.nextUrl.pathname
     console.log(path)

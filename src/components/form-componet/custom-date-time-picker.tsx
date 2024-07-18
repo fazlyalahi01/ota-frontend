@@ -1,80 +1,73 @@
 import React from "react";
-
-import { Typography } from "@mui/material";
-import { TimePicker, renderTimeViewClock } from "@mui/x-date-pickers";
+import moment, { Moment } from "moment-timezone";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
-import moment, { Moment } from "moment";
+import { TimePicker, renderTimeViewClock } from "@mui/x-date-pickers";
 
 export const CustomDatePicker: React.FC<{
-    fieldName?: string;
     value: string;
     sx?: any;
     disabled?: boolean;
     views?: ("day" | "month" | "year")[];
     inputFormat?: string;
     fullWidth?: boolean;
-    onChange: (value: any, formattedDate: string) => void;
-    error?: boolean;
-    helperText?: string;
+    errorMessage?: string;
+    onChange: (value: any, timeWithSeconds: any, momentObject: Moment | null) => void;
+
 }> = (props) => {
     const {
-        fieldName,
         value,
         sx,
         views = ["year", "month", "day"],
-        inputFormat = "DD-MM-YYYY",
+        inputFormat = "MM-DD-YYYY",
         fullWidth,
         disabled,
-        error,
-        helperText,
+        errorMessage
     } = props;
     return (
         <>
             <DatePicker
-                name={fieldName}
                 views={views}
-                key={value}
+
                 disabled={disabled}
                 format={inputFormat}
                 sx={{
                     width: fullWidth ? "100%" : "unset",
+
                     "& .MuiOutlinedInput-input": {
                         padding: "9px 13px",
                         fontSize: "0.8rem",
                         color: "rgb(38, 38, 38)",
                     },
+                    ...sx
                 }}
-                value={moment(value) && value.length > 0 ? moment(value) : null}
+                value={value ? moment(value) : null}
                 onChange={(newValue) => {
-                    const formattedDate = moment(newValue).format("YYYY-MM-DD");
-                    props.onChange(newValue, formattedDate);
+                    if (newValue) {
+                        const newDate = moment(newValue).format("YYYY-MM-DD");
+                        const newDate1 = moment(newValue).format("YYYY-MM-DD, HH:mm:ss a");
+                        props.onChange(newDate, newDate1, newValue);
+                    }
+                    else {
+                        props.onChange(null, null, null);
+                    }
+
                 }}
             />
-            <Typography
-                variant="body2"
-                sx={{
-                    fontSize: "0.75rem",
-                    color: "#e46a76",
-                    marginLeft: 2,
-                    marginTop: 0.75,
-                }}
-            >
-                {error && helperText}
-            </Typography>
         </>
     );
 };
 
 export const CustomTimePicker: React.FC<{
-    value: any;
+    value: string | null;
     sx?: any;
     fullWidth?: boolean;
-    onChange: (value: Moment) => void;
+    onChange: (value: string) => void;
     disabled?: boolean;
 }> = (props) => {
+    console.log(props.value)
     const { value, sx, fullWidth, disabled } = props;
     const timeString = value;
-    const momentObject = moment(timeString, "HH:mm:ss");
+    const momentObject = moment(timeString);
     return (
         <TimePicker
             value={momentObject}
@@ -84,10 +77,10 @@ export const CustomTimePicker: React.FC<{
                 minutes: renderTimeViewClock,
                 seconds: renderTimeViewClock,
             }}
-            format="hh:mm A"
+            // format="hh:mm A"
             onChange={(newValue) => {
                 if (newValue) {
-                    props.onChange(newValue);
+                    props.onChange(moment(newValue).format('HH:mm:ss.SSS'));
                 }
             }}
             sx={{
@@ -96,6 +89,9 @@ export const CustomTimePicker: React.FC<{
                     padding: "9px 13px",
                     fontSize: "0.8rem",
                     color: "rgb(38, 38, 38)",
+                },
+                "& .MuiInputBase-root": {
+                    backgroundColor: "white",
                 },
             }}
         />

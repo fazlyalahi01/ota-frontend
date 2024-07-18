@@ -15,6 +15,9 @@ const CustomTextField = styled((props: TextFieldProps) => (
   '&:hover .MuiOutlinedInput-notchedOutline': {
     borderColor: theme.palette.primary.dark, 
   },
+  '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
+    borderColor: theme.palette.primary.light, 
+  },
   '& .MuiInputLabel-root': {
     color: theme.palette.mode === "dark" ? "#fff" : "#000", 
   },

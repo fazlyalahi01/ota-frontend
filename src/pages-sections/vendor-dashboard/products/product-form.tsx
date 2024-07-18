@@ -14,12 +14,13 @@ import { FlexBox } from "components/flex-box";
 // STYLED COMPONENTS
 import CustomFormLabel from "components/form-componet/CustomFormLabel";
 import CustomTextField from "components/form-componet/CustomTextField";
-import { ILocationResponsePayload } from "components/LocationAutoComplete/LocationAutoComplete";
+import { ILocationResponsePayload, LocationAutoComplete } from "components/LocationAutoComplete/LocationAutoComplete";
 import { defaultProperty } from "models/Property.model";
 import { StyledClear, UploadImageBox } from "../styles";
 import { CustomTimePicker } from "components/form-componet/custom-date-time-picker";
 import moment from "moment";
 import { api } from "api/api";
+import useAuth from "hooks/useAuth";
 
 // FORM FIELDS VALIDATION SCHEMA
 const VALIDATION_SCHEMA = yup.object().shape({
@@ -32,6 +33,7 @@ interface Props { }
 
 export default function ProductForm(props: Props) {
   const [files, setFiles] = useState([]);
+  const { userInfo } = useAuth()
 
   const {
     values,
@@ -45,9 +47,17 @@ export default function ProductForm(props: Props) {
   } = useFormik({
     initialValues: defaultProperty,
     validationSchema: VALIDATION_SCHEMA,
-    onSubmit: async(values) => {
+    onSubmit: async (values) => {
 
-      const res = await api.post("/property/create", values);
+      const res = await api.post("/property/upsert-property",
+        values,
+        {
+          headers: {
+            "auth-Token": userInfo.token,
+          },
+        }
+      );
+      console.log(res)
 
       console.log(values);
     }
@@ -117,40 +127,51 @@ export default function ProductForm(props: Props) {
               <MenuItem value="apartment">Apartment</MenuItem>
             </CustomTextField>
           </Grid>
-          <Grid item xs={12} lg={3}>
+          <Grid item xs={12} sm={3}>
+            <CustomFormLabel>Location</CustomFormLabel>
+            <LocationAutoComplete
+              value={values.property_address_line_1}
+              onLocationChange={handleLocation}
+            />
+          </Grid>
+          <Grid item xs={12} sm={3}>
             <CustomFormLabel>Property Address Line 1</CustomFormLabel>
             <CustomTextField
               type="text"
+              color="info"
               name="property_address_line_1"
               fullWidth
               value={values.property_address_line_1}
               onChange={handleChange}
             />
           </Grid>
-          <Grid item xs={12} lg={3}>
+          <Grid item xs={12} sm={3}>
             <CustomFormLabel>Address Line 2</CustomFormLabel>
             <CustomTextField
               type="text"
+              color="info"
               name="property_address_line_2"
               fullWidth
               value={values.property_address_line_2}
               onChange={handleChange}
             />
           </Grid>
-          <Grid item xs={12} lg={3}>
+          <Grid item xs={12} sm={3}>
             <CustomFormLabel>City</CustomFormLabel>
             <CustomTextField
               type="text"
+              color="info"
               name="property_city"
               fullWidth
               value={values.property_city}
               onChange={handleChange}
             />
           </Grid>
-          <Grid item xs={12} lg={3}>
+          <Grid item xs={12} sm={3}>
             <CustomFormLabel>State</CustomFormLabel>
             <CustomTextField
               type="text"
+              color="info"
               name="property_state"
               fullWidth
               value={values.property_state}
@@ -158,10 +179,11 @@ export default function ProductForm(props: Props) {
             />
           </Grid>
 
-          <Grid item xs={12} lg={3}>
+          <Grid item xs={12} sm={3}>
             <CustomFormLabel>Pincode</CustomFormLabel>
             <CustomTextField
               type="text"
+              color="info"
               name="property_pincode"
               fullWidth
               value={values.property_pincode}
@@ -169,41 +191,58 @@ export default function ProductForm(props: Props) {
             />
           </Grid>
 
-          <Grid item xs={12} lg={3}>
+          <Grid item xs={12} sm={3}>
             <CustomFormLabel>Country</CustomFormLabel>
             <CustomTextField
               type="text"
+              color="info"
               name="property_country"
               fullWidth
               value={values.property_country}
               onChange={handleChange}
             />
           </Grid>
-          <Grid item xs={12} lg={3}>
+          <Grid item xs={12} sm={3}>
             <CustomFormLabel>Longitude</CustomFormLabel>
             <CustomTextField
-              type="text"
+              type="number"
+              color="info"
               name="longitude"
               fullWidth
               value={values.longitude}
               onChange={handleChange}
             />
           </Grid>
-          <Grid item xs={12} lg={3}>
+          <Grid item xs={12} sm={3}>
             <CustomFormLabel>Latitude</CustomFormLabel>
             <CustomTextField
-              type="text"
+              type="number"
+              color="info"
               name="latitude"
               fullWidth
               value={values.latitude}
               onChange={handleChange}
             />
           </Grid>
-          <Grid item xs={12} lg={3}>
+          <Grid item xs={12} sm={3}>
             <CustomFormLabel>Check in</CustomFormLabel>
             <CustomTimePicker
+              fullWidth
               value={values.checkin_time}
-              onChange={(time) => setFieldValue("checkin_time", time.toISOString())}
+              onChange={(time) => {
+                setFieldValue("checkin_time", time)
+              }}
+
+            />
+          </Grid>
+          <Grid item xs={12} sm={3}>
+            <CustomFormLabel>Check out</CustomFormLabel>
+            <CustomTimePicker
+              fullWidth
+              value={values.checkout_time}
+              onChange={(time) => {
+                setFieldValue("checkout_time", time)
+              }}
 
             />
           </Grid>
