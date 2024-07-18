@@ -2,10 +2,8 @@
 // YOU NEED TO BUILD YOUR OWN SERVER
 // IF YOU NEED HELP ABOUT SERVER SIDE IMPLEMENTATION
 // CONTACT US AT support@ui-lib.com
-import shops from "./data";
 import products from "data/product-database";
-import Shop from "models/Shop.model";
-import Product from "models/Product.model";
+import shops from "./data";
 export const ShopEndpoints = (Mock) => {
   const getProducts = (slug: string) =>
     products.filter((item) => item.shop.slug === slug);

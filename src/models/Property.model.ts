@@ -21,7 +21,7 @@ interface PropertyPolicy {
 type PropertyType = 'Hotel' | 'Resort' | 'Apartment';
 type Status = 'ACTIVE' | 'INACTIVE';
 
-export interface IProduct {
+export interface IProperty {
   property_details_uuid: string;
   property_details_name: string;
   property_type: PropertyType;
@@ -50,7 +50,7 @@ export interface IProduct {
 }
 
 
-export const initialProduct: IProduct = {
+export const defaultProperty: IProperty = {
   property_details_uuid: '',
   property_details_name: '',
   property_type: 'Hotel',

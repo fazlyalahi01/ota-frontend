@@ -15,7 +15,7 @@ import useMuiTable from "hooks/useMuiTable";
 import ProductRow from "../product-row";
 import SearchArea from "../../search-box";
 import PageWrapper from "../../page-wrapper";
-import { IProduct } from "models/Product.model";
+import { IProperty } from "models/Product.model";
 // CUSTOM DATA MODEL
 
 // TABLE HEADING DATA LIST
@@ -29,11 +29,11 @@ const tableHeading = [
 ];
 
 // =============================================================================
-type Props = { products: IProduct[] };
+type Props = { products: IProperty[] };
 // =============================================================================
 
 export default function ProductsPageView({ products }: Props) {
-  const [productList, setProductList] = useState<IProduct[]>([...products]);
+  const [productList, setProductList] = useState<IProperty[]>([...products]);
 
   console.log(productList, "products");
 

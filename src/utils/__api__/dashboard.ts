@@ -3,9 +3,9 @@ import axios from "../../utils/axiosInstance";
 import Brand from "models/Brand.model";
 import Order from "models/Order.model";
 import Review from "models/Review.model";
-import Product from "models/Product.model";
 import Category from "models/Category.model";
 import { api } from "api/api";
+import { IProduct } from "models/Product.model";
 
 // dashboard
 const getAllCard = cache(async () => {
@@ -15,7 +15,6 @@ const getAllCard = cache(async () => {
 
 const recentPurchase = cache(async () => {
   const response = await axios.get("/api/admin/recent-purchase");
-  console.log(response)
   return response.data.data;
 });
 
@@ -25,7 +24,7 @@ const stockOutProducts = cache(async () => {
 });
 
 // products
-const products = cache(async (): Promise<Product[]> => {
+const products = cache(async (): Promise<IProduct[]> => {
   const response = await api.get("/property/get-property");
   return response.data.data;
 });
