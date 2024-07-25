@@ -1,32 +1,23 @@
 "use client";
 
-import { Add, Delete, ExpandMore } from "@mui/icons-material";
-import { Accordion, AccordionDetails, AccordionSummary, Box } from "@mui/material";
-import Button from "@mui/material/Button";
 import Card from "@mui/material/Card";
 import Grid from "@mui/material/Grid";
-import MenuItem from "@mui/material/MenuItem";
 import { api } from "api/api";
 import CustomStepper from "components/common/custom-stepper";
-import IncrementalTextfield, { DangerIconButton, PrimaryIconButton } from "components/common/incremental-textfiled";
-import { CustomTimePicker } from "components/form-componet/custom-date-time-picker";
-import CustomFormLabel from "components/form-componet/CustomFormLabel";
-import CustomTextField from "components/form-componet/CustomTextField";
-import { ILocationResponsePayload, LocationAutoComplete } from "components/LocationAutoComplete/LocationAutoComplete";
+import { ILocationResponsePayload } from "components/LocationAutoComplete/LocationAutoComplete";
 import { useFormik } from "formik";
 import useAuth from "hooks/useAuth";
-import { produce } from "immer";
 import { defaultProperty } from "models/Property.model";
 import React, { useState } from "react";
 import * as yup from "yup";
-import { PropertyFormStepOne } from "./_components/step-one";
-import { PropertyFormStepTwo } from "./_components/step-two";
-import { PropertyFormStepThree } from "./_components/step-three";
-import { PropertyFormStepFour } from "./_components/step-four";
+import { PropertyFormButton } from "./_components/form-button";
 import { PropertyFormStepFive } from "./_components/step-five";
+import { PropertyFormStepFour } from "./_components/step-four";
+import { PropertyFormStepOne } from "./_components/step-one";
 import { PropertyFormStepSeven } from "./_components/step-seven";
 import { PropertyFormStepSix } from "./_components/step-six";
-import { PropertyFormButton } from "./_components/form-button";
+import { PropertyFormStepThree } from "./_components/step-three";
+import { PropertyFormStepTwo } from "./_components/step-two";
 
 // FORM FIELDS VALIDATION SCHEMA
 const VALIDATION_SCHEMA = yup.object().shape({
@@ -41,14 +32,12 @@ export default function PropertyForm(props: Props) {
   const [files, setFiles] = useState([]);
   const { userInfo } = useAuth();
   const steps = ['Description', 'Price', 'Images', 'Details', 'Location', 'Amenities', 'Calender'];
-  const [activeStep, setActiveStep] = React.useState(6);
+  const [activeStep, setActiveStep] = React.useState(0);
 
 
   const {
     values,
     errors,
-    touched,
-    handleBlur,
     handleChange,
     handleSubmit,
     setValues,
@@ -57,20 +46,19 @@ export default function PropertyForm(props: Props) {
     initialValues: defaultProperty,
     validationSchema: VALIDATION_SCHEMA,
     onSubmit: async (values) => {
-
-      const res = await api.post("/property/upsert-property",
-        values,
+      const { insert_ts, create_ts, ...rest } = values;
+      await api.post("/property/upsert-property",
+        rest,
         {
           headers: {
             "auth-Token": userInfo.token,
           },
         }
       );
-      console.log(res)
-
-      console.log(values);
     }
   });
+
+  console.log(values, "values")
 
   // HANDLE UPDATE NEW IMAGE VIA DROP ZONE
   const handleChangeDropZone = (files: File[]) => {
@@ -92,80 +80,6 @@ export default function PropertyForm(props: Props) {
       property_country: data.country,
       property_pincode: data.postalCode,
     });
-  };
-
-  // handle rule allowed
-
-  const handleRuleAllowed = (index: number, value: string) => {
-    const newValues = produce(values, (draft) => {
-      draft.rule_allowed[index] = value;
-    })
-    setValues(newValues);
-  }
-  const handleAddRuleAllowed = (currentIndex: number) => {
-    const newValues = produce(values, (draft) => {
-      draft.rule_allowed.splice(currentIndex + 1, 0, "");
-    })
-    setValues(newValues);
-  };
-
-  const handleDeleteRuleAllowed = (currentIndex: number) => {
-    console.log(currentIndex, "currentIndex")
-    const newValues = produce(values.rule_allowed, (draft) => {
-      draft.splice(currentIndex, 1);
-    })
-    setFieldValue("rule_allowed", newValues);
-  };
-  // handle rule not allowed
-
-  const handleRuleNotAllowed = (index: number, value: string) => {
-    const newValues = produce(values, (draft) => {
-      draft.rule_not_allowed[index] = value;
-    })
-    setValues(newValues);
-  }
-  const handleAddRuleNotAllowed = (currentIndex: number) => {
-    const newValues = produce(values, (draft) => {
-      draft.rule_not_allowed.splice(currentIndex + 1, 0, "");
-    })
-    setValues(newValues);
-  };
-
-  const handleDeleteRuleNotAllowed = (currentIndex: number) => {
-    console.log(currentIndex, "currentIndex")
-    const newValues = produce(values.rule_not_allowed, (draft) => {
-      draft.splice(currentIndex, 1);
-    })
-    setFieldValue("rule_not_allowed", newValues);
-  };
-
-
-  // handle amineties 
-  const handleAmenitiesSectionChange = (index: number, label: string) => {
-    const newValues = produce(values, (draft) => {
-      draft.amenities[index]["label"] = label;
-    })
-    setValues(newValues);
-  }
-  const handleAmenitiesChange = (index: number, value: string) => {
-    const newValues = produce(values, (draft) => {
-      draft.amenities[index][value] = value;
-    })
-    setValues(newValues);
-  }
-  const handleAddAmenities = (currentIndex: number) => {
-    const newValues = produce(values, (draft) => {
-      draft.rule_not_allowed.splice(currentIndex + 1, 0, "");
-    })
-    setValues(newValues);
-  };
-
-  const handleDeleteAmenities = (currentIndex: number) => {
-    console.log(currentIndex, "currentIndex")
-    const newValues = produce(values.rule_not_allowed, (draft) => {
-      draft.splice(currentIndex, 1);
-    })
-    setFieldValue("rule_not_allowed", newValues);
   };
 
   // handle Active Step
@@ -190,10 +104,9 @@ export default function PropertyForm(props: Props) {
               activeStep === 0 && (
                 <PropertyFormStepOne
                   values={values}
-                  handleChange
+                  handleChange={handleChange}
                   touched
                   errors
-                  handleBlur
                 />
               )
             }
@@ -201,7 +114,7 @@ export default function PropertyForm(props: Props) {
               activeStep === 1 && (
                 <PropertyFormStepTwo
                   values={values}
-                  handleChange
+                  handleChange={handleChange}
                 />
               )
             }
@@ -209,7 +122,7 @@ export default function PropertyForm(props: Props) {
               activeStep === 2 && (
                 <PropertyFormStepThree
                   values={values}
-                  handleChange
+                  handleChange={handleChange}
                 />
               )
             }
@@ -217,7 +130,7 @@ export default function PropertyForm(props: Props) {
               activeStep === 3 && (
                 <PropertyFormStepFour
                   values={values}
-                  handleChange
+                  handleChange={handleChange}
                 />
               )
             }
@@ -225,7 +138,7 @@ export default function PropertyForm(props: Props) {
               activeStep === 4 && (
                 <PropertyFormStepFive
                   values={values}
-                  handleChange
+                  handleChange={handleChange}
                   setValues
                 />
               )
@@ -235,7 +148,7 @@ export default function PropertyForm(props: Props) {
                 <PropertyFormStepSix
                   values={values}
                   setValues={setValues}
-                  handleChange
+                  handleChange={handleChange}
                 />
               )
             }
@@ -243,8 +156,8 @@ export default function PropertyForm(props: Props) {
               activeStep === 6 && (
                 <PropertyFormStepSeven
                   values={values}
-                  handleChange
-                  setFieldValue
+                  handleChange={handleChange}
+                  setFieldValue={setFieldValue}
                 />
               )
             }

@@ -8,10 +8,9 @@ interface Props {
     handleChange: any;
     touched: any;
     errors: any;
-    handleBlur: any;
 }
 
-export function PropertyFormStepOne({ values, handleChange, touched, errors, handleBlur }: Props) {
+export function PropertyFormStepOne({ values, handleChange, touched, errors }: Props) {
     return (
         <>
             <Grid item sm={3} xs={12}>
@@ -21,9 +20,7 @@ export function PropertyFormStepOne({ values, handleChange, touched, errors, han
                     name="property_details_name"
                     color="info"
                     value={values.property_details_name}
-                    onChange={handleChange}
-                    helperText={touched.property_details_name && errors.property_details_name}
-                    error={Boolean(touched.property_details_name && errors.property_details_name)}
+                    onChange={handleChange}                  
                 />
             </Grid>            
             <Grid item sm={3} xs={12}>
@@ -33,7 +30,6 @@ export function PropertyFormStepOne({ values, handleChange, touched, errors, han
                     fullWidth
                     color="info"
                     name="property_type"
-                    onBlur={handleBlur}
                     onChange={handleChange}
                     value={values.property_type}
                 >
