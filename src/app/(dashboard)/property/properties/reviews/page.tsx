@@ -1,5 +1,5 @@
 import { Metadata } from "next";
-import { ProductReviewsPageView } from "pages-sections/vendor-dashboard/products/page-view";
+import { ProductReviewsPageView } from "pages-sections/vendor-dashboard/property/page-view";
 // API FUNCTIONS
 import api from "utils/__api__/dashboard";
 

@@ -31,7 +31,7 @@ const VALIDATION_SCHEMA = yup.object().shape({
 interface Props { }
 // ================================================================
 
-export default function ProductForm(props: Props) {
+export default function PropertyForm(props: Props) {
   const [files, setFiles] = useState([]);
   const { userInfo } = useAuth()
 
@@ -246,20 +246,12 @@ export default function ProductForm(props: Props) {
 
             />
           </Grid>
-          <Grid item xs={12}>
-            <DropZone onChange={(files) => handleChangeDropZone(files)} />
-
-            <FlexBox flexDirection="row" mt={2} flexWrap="wrap" gap={1}>
-              {files.map((file, index) => (
-                <UploadImageBox key={index}>
-                  <Box component="img" src={file.preview} width="100%" />
-                  <StyledClear onClick={handleFileDelete(file)} />
-                </UploadImageBox>
-              ))}
-            </FlexBox>
+          <Grid item xs={12} sm={3}>
+            <CustomFormLabel>Rule Allowed</CustomFormLabel>
+            
           </Grid>
 
-          <Grid item sm={4} xs={12}>
+          <Grid item xs={12}>
             <Button variant="contained" color="info" type="submit">
               Save product
             </Button>

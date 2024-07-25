@@ -17,10 +17,9 @@ interface Props {
 }
 // ==============================================================
 
-export default function LoginCartButtons({ toggleDialog, toggleSidenav }: Props) {
+export default function UserProfileButton({ toggleDialog, toggleSidenav }: Props) {
   const { state } = useCart();
   const { userInfo, isLogin, logout } = useAuth();
-  console.log(userInfo, isLogin, logout);
 
   const ICON_COLOR = { color: "grey.600" };
 

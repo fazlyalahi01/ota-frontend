@@ -12,9 +12,9 @@ import FlexBox from "components/flex-box/flex-box";
 import MobileHeader from "./components/mobile-header";
 import DialogDrawer from "./components/dialog-drawer";
 import CategoriesMenu from "./components/categories-menu";
-import LoginCartButtons from "./components/login-cart-buttons";
 // STYLED COMPONENTS
 import { HeaderWrapper, StyledContainer } from "./styles";
+import UserProfileButton from "./components/user-profile";
 
 // ==============================================================
 interface Props {
@@ -45,17 +45,7 @@ export default function Header({ isFixed, className, midSlot }: Props) {
       {midSlot}
 
       {/* LOGIN AND CART BUTTON */}
-      <LoginCartButtons toggleDialog={toggleDialog} toggleSidenav={toggleSidenav} />
-
-      {/* LOGIN FORM DIALOG AND CART SIDE BAR  */}
-
-      
-      <DialogDrawer
-        dialogOpen={dialogOpen}
-        sidenavOpen={sidenavOpen}
-        toggleDialog={toggleDialog}
-        toggleSidenav={toggleSidenav}
-      />
+      <UserProfileButton toggleDialog={toggleDialog} toggleSidenav={toggleSidenav} />     
     </Fragment>
   );
 

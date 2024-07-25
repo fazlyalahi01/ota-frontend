@@ -1,11 +1,11 @@
 // LOCAL CUSTOM COMPONENT
-import ProductForm from "../product-form";
 import PageWrapper from "../../page-wrapper";
+import PropertyForm from "../property-form";
 
 export default function ProductCreatePageView() {
   return (
     <PageWrapper title="Add New Product">
-      <ProductForm />
+      <PropertyForm />
     </PageWrapper>
   );
 }

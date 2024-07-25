@@ -86,7 +86,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = (
     React.useEffect(() => {
         if (userInfo.token && isValidToken(userInfo.token)) {
             Cookies.set("token", userInfo.token);
-        }else {
+        } else {
             Cookies.remove("token");
         }
     }, [userInfo])
@@ -102,6 +102,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = (
                 email: email,
                 password: password,
             });
+
+            console.log(res.data, "res from login action")
 
             const userData: IAuth["userInfo"] = {
                 token: res.data.data.token,

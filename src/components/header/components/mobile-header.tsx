@@ -20,6 +20,7 @@ import { FlexBetween, FlexBox } from "components/flex-box";
 import useCart from "hooks/useCart";
 // LOCAL CUSTOM HOOK
 import useHeader from "../hooks/use-header";
+import UserProfileButton from "./user-profile";
 
 export default function MobileHeader() {
   const { state } = useCart();
@@ -44,15 +45,7 @@ export default function MobileHeader() {
         {/* RIGHT CONTENT - LOGIN, CART, SEARCH BUTTON */}
         <FlexBox justifyContent="end" flex={1}>          
 
-          <IconButton onClick={toggleDialog}>
-            <Icon.User sx={ICON_STYLE} />
-          </IconButton>
-
-          <Badge badgeContent={state.cart.length} color="primary">
-            <IconButton onClick={toggleSidenav}>
-              <Icon.CartBag sx={ICON_STYLE} />
-            </IconButton>
-          </Badge>
+        <UserProfileButton toggleDialog={toggleDialog} toggleSidenav={toggleSidenav} />
         </FlexBox>
       </FlexBetween>
 

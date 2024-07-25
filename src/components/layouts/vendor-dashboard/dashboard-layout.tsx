@@ -8,10 +8,12 @@ import DashboardNavbar from "./dashboard-navbar/dashboard-navbar";
 import DashboardSidebar from "./dashboard-sidebar/dashboard-sidebar";
 // LOCAL LAYOUT CONTEXT PROVIDER
 import { LayoutProvider } from "./dashboard-layout-context";
+import ProgressBar from "components/progress/progress";
 
 export default function VendorDashboardLayout({ children }: PropsWithChildren) {
   return (
     <LayoutProvider>
+      <ProgressBar />
       {/* DASHBOARD SIDEBAR NAVIGATION */}
       <DashboardSidebar />
 
