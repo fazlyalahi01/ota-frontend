@@ -7,6 +7,7 @@ import Card from "@mui/material/Card";
 import Grid from "@mui/material/Grid";
 import MenuItem from "@mui/material/MenuItem";
 import { api } from "api/api";
+import CustomStepper from "components/common/custom-stepper";
 import IncrementalTextfield, { DangerIconButton, PrimaryIconButton } from "components/common/incremental-textfiled";
 import { CustomTimePicker } from "components/form-componet/custom-date-time-picker";
 import CustomFormLabel from "components/form-componet/CustomFormLabel";
@@ -16,8 +17,16 @@ import { useFormik } from "formik";
 import useAuth from "hooks/useAuth";
 import { produce } from "immer";
 import { defaultProperty } from "models/Property.model";
-import { useState } from "react";
+import React, { useState } from "react";
 import * as yup from "yup";
+import { PropertyFormStepOne } from "./_components/step-one";
+import { PropertyFormStepTwo } from "./_components/step-two";
+import { PropertyFormStepThree } from "./_components/step-three";
+import { PropertyFormStepFour } from "./_components/step-four";
+import { PropertyFormStepFive } from "./_components/step-five";
+import { PropertyFormStepSeven } from "./_components/step-seven";
+import { PropertyFormStepSix } from "./_components/step-six";
+import { PropertyFormButton } from "./_components/form-button";
 
 // FORM FIELDS VALIDATION SCHEMA
 const VALIDATION_SCHEMA = yup.object().shape({
@@ -30,7 +39,10 @@ interface Props { }
 
 export default function PropertyForm(props: Props) {
   const [files, setFiles] = useState([]);
-  const { userInfo } = useAuth()
+  const { userInfo } = useAuth();
+  const steps = ['Description', 'Price', 'Images', 'Details', 'Location', 'Amenities', 'Calender'];
+  const [activeStep, setActiveStep] = React.useState(6);
+
 
   const {
     values,
@@ -127,7 +139,7 @@ export default function PropertyForm(props: Props) {
     setFieldValue("rule_not_allowed", newValues);
   };
 
-  
+
   // handle amineties 
   const handleAmenitiesSectionChange = (index: number, label: string) => {
     const newValues = produce(values, (draft) => {
@@ -135,9 +147,9 @@ export default function PropertyForm(props: Props) {
     })
     setValues(newValues);
   }
-  const handleAmenitiesChange = (index: number, rowId: number,  value: string) => {
+  const handleAmenitiesChange = (index: number, value: string) => {
     const newValues = produce(values, (draft) => {
-      draft.amenities[index][value][rowId] = value;
+      draft.amenities[index][value] = value;
     })
     setValues(newValues);
   }
@@ -156,249 +168,100 @@ export default function PropertyForm(props: Props) {
     setFieldValue("rule_not_allowed", newValues);
   };
 
+  // handle Active Step
+
+  const handleActiveStep = (buttonType: "back" | "front") => {
+    if (buttonType === "back" && activeStep > 0) {
+      setActiveStep((pre) => pre - 1)
+    } else if (buttonType === "front" && activeStep < steps.length - 1) {
+      setActiveStep((pre) => pre + 1)
+    }
+
+  }
+
 
   return (
-    <Card className="p-3">
-      <form onSubmit={handleSubmit}>
-        <Grid container spacing={3}>
-          <Grid item sm={3} xs={12}>
-            <CustomFormLabel>Property Name</CustomFormLabel>
-            <CustomTextField
-              fullWidth
-              name="property_details_name"
-              color="info"
-              value={values.property_details_name}
-              onChange={handleChange}
-              helperText={touched.property_details_name && errors.property_details_name}
-              error={Boolean(touched.property_details_name && errors.property_details_name)}
-            />
-          </Grid>
-          <Grid item sm={3} xs={12}>
-            <CustomFormLabel>Property Description</CustomFormLabel>
-            <CustomTextField
-              fullWidth
-              name="about_property"
-              color="info"
-              value={values.about_property}
-              onChange={handleChange}
-            />
-          </Grid>
-          <Grid item sm={3} xs={12}>
-            <CustomFormLabel>Property Type</CustomFormLabel>
-            <CustomTextField
-              select
-              fullWidth
-              color="info"
-              name="property_type"
-              onBlur={handleBlur}
-              onChange={handleChange}
-              value={values.property_type}
-            >
-              <MenuItem value="hotel">Hole</MenuItem>
-              <MenuItem value="resort">Resort</MenuItem>
-              <MenuItem value="apartment">Apartment</MenuItem>
-            </CustomTextField>
-          </Grid>
-          <Grid item xs={12} sm={3}>
-            <CustomFormLabel>Location</CustomFormLabel>
-            <LocationAutoComplete
-              value={values.property_address_line_1}
-              onLocationChange={handleLocation}
-            />
-          </Grid>
-          <Grid item xs={12} sm={3}>
-            <CustomFormLabel>Property Address Line 1</CustomFormLabel>
-            <CustomTextField
-              type="text"
-              color="info"
-              name="property_address_line_1"
-              fullWidth
-              value={values.property_address_line_1}
-              onChange={handleChange}
-            />
-          </Grid>
-          <Grid item xs={12} sm={3}>
-            <CustomFormLabel>Address Line 2</CustomFormLabel>
-            <CustomTextField
-              type="text"
-              color="info"
-              name="property_address_line_2"
-              fullWidth
-              value={values.property_address_line_2}
-              onChange={handleChange}
-            />
-          </Grid>
-          <Grid item xs={12} sm={3}>
-            <CustomFormLabel>City</CustomFormLabel>
-            <CustomTextField
-              type="text"
-              color="info"
-              name="property_city"
-              fullWidth
-              value={values.property_city}
-              onChange={handleChange}
-            />
-          </Grid>
-          <Grid item xs={12} sm={3}>
-            <CustomFormLabel>State</CustomFormLabel>
-            <CustomTextField
-              type="text"
-              color="info"
-              name="property_state"
-              fullWidth
-              value={values.property_state}
-              onChange={handleChange}
-            />
-          </Grid>
-
-          <Grid item xs={12} sm={3}>
-            <CustomFormLabel>Pincode</CustomFormLabel>
-            <CustomTextField
-              type="text"
-              color="info"
-              name="property_pincode"
-              fullWidth
-              value={values.property_pincode}
-              onChange={handleChange}
-            />
-          </Grid>
-
-          <Grid item xs={12} sm={3}>
-            <CustomFormLabel>Country</CustomFormLabel>
-            <CustomTextField
-              type="text"
-              color="info"
-              name="property_country"
-              fullWidth
-              value={values.property_country}
-              onChange={handleChange}
-            />
-          </Grid>
-          <Grid item xs={12} sm={3}>
-            <CustomFormLabel>Longitude</CustomFormLabel>
-            <CustomTextField
-              type="number"
-              color="info"
-              name="longitude"
-              fullWidth
-              value={values.longitude}
-              onChange={handleChange}
-            />
-          </Grid>
-          <Grid item xs={12} sm={3}>
-            <CustomFormLabel>Latitude</CustomFormLabel>
-            <CustomTextField
-              type="number"
-              color="info"
-              name="latitude"
-              fullWidth
-              value={values.latitude}
-              onChange={handleChange}
-            />
-          </Grid>
-          <Grid item xs={12} sm={3}>
-            <CustomFormLabel>Check in</CustomFormLabel>
-            <CustomTimePicker
-              fullWidth
-              value={values.checkin_time}
-              onChange={(time) => {
-                setFieldValue("checkin_time", time)
-              }}
-
-            />
-          </Grid>
-          <Grid item xs={12} sm={3}>
-            <CustomFormLabel>Check out</CustomFormLabel>
-            <CustomTimePicker
-              fullWidth
-              value={values.checkout_time}
-              onChange={(time) => {
-                setFieldValue("checkout_time", time)
-              }}
-
-            />
-          </Grid>
-
-          <Grid item xs={12} sm={3} spacing={2}>
-            <CustomFormLabel>Rule Allowed</CustomFormLabel>
+    <>
+      <CustomStepper steps={steps} activeStep={activeStep} />
+      <Card className="p-3">
+        <form onSubmit={handleSubmit}>
+          <Grid container spacing={3}>
             {
-              values.rule_allowed?.map((item, index) => (
-                <IncrementalTextfield
-                  key={index}
-                  index={index}
-                  isDisabled={index === 0 && values.rule_allowed?.length === 1}
-                  value={item}
-                  onChange={handleRuleAllowed}
-                  onAdd={handleAddRuleAllowed}
-                  onDelete={handleDeleteRuleAllowed}
+              activeStep === 0 && (
+                <PropertyFormStepOne
+                  values={values}
+                  handleChange
+                  touched
+                  errors
+                  handleBlur
                 />
-              ))
+              )
             }
-          </Grid>
-          <Grid item xs={12} sm={3}>
-            <CustomFormLabel>Rule Not Allowed</CustomFormLabel>
             {
-              values.rule_not_allowed?.map((item, index) => (
-                <IncrementalTextfield
-                  key={index}
-                  index={index}
-                  isDisabled={index === 0 && values.rule_not_allowed?.length === 1}
-                  value={item}
-                  onChange={handleRuleNotAllowed}
-                  onAdd={handleAddRuleNotAllowed}
-                  onDelete={handleDeleteRuleNotAllowed}
+              activeStep === 1 && (
+                <PropertyFormStepTwo
+                  values={values}
+                  handleChange
                 />
-              ))
+              )
             }
-          </Grid>
-
-          <Grid item xs={12} sm={6}>
-            <CustomFormLabel>Amenities</CustomFormLabel>
             {
-              values.amenities?.map((item, index) => (
-                <Accordion key={index}>
-                  <AccordionSummary expandIcon={<ExpandMore />} key={index}>
-                    <CustomTextField
-                      fullWidth
-                      placeholder="Section name"                      
-                      onChange={(e)=>handleAmenitiesSectionChange(index, e.target.value)}
-                      value={item.label}
-                    />
-                    <PrimaryIconButton >
-                      <Add fontSize="small" />
-                    </PrimaryIconButton>
-                    <DangerIconButton >
-                      <Delete fontSize="small" />
-                    </DangerIconButton>
-                  </AccordionSummary>
-
-                  <AccordionDetails>
-                    {
-                      item?.value?.map((data, rowId) => (
-                        <IncrementalTextfield
-                          key={index}
-                          index={index}
-                          placeholder="Amenitiy name"
-                          isDisabled={index === 0 && values.rule_not_allowed?.length === 1}
-                          value={data}
-                          onChange={handleAmenitiesChange}
-                          onAdd={handleAddAmenities}
-                          onDelete={handleDeleteAmenities}
-                        />
-                      ))
-                    }
-                  </AccordionDetails>
-                </Accordion>
-              ))
+              activeStep === 2 && (
+                <PropertyFormStepThree
+                  values={values}
+                  handleChange
+                />
+              )
             }
+            {
+              activeStep === 3 && (
+                <PropertyFormStepFour
+                  values={values}
+                  handleChange
+                />
+              )
+            }
+            {
+              activeStep === 4 && (
+                <PropertyFormStepFive
+                  values={values}
+                  handleChange
+                  setValues
+                />
+              )
+            }
+            {
+              activeStep === 5 && (
+                <PropertyFormStepSix
+                  values={values}
+                  setValues={setValues}
+                  handleChange
+                />
+              )
+            }
+            {
+              activeStep === 6 && (
+                <PropertyFormStepSeven
+                  values={values}
+                  handleChange
+                  setFieldValue
+                />
+              )
+            }
+
+
+            <Grid item md={12}>
+              <PropertyFormButton
+                activeStep={activeStep}
+                handleActiveStep={handleActiveStep}
+                onSubmit={handleSubmit}
+                steps={steps}
+              />
+            </Grid>
           </Grid>
-          <Grid item md={12}>
-            <Button variant="contained" color="info" type="submit">
-              Save product
-            </Button>
-          </Grid>
-        </Grid>
-      </form>
-    </Card >
+        </form>
+      </Card >
+    </>
+
   );
 }

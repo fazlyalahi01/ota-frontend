@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 
 export default function ProductCreate() {
   return (
-    <PageWrapper title="Add New Product">
+    <PageWrapper title="Add Property">
       <PropertyForm />
     </PageWrapper>
   );

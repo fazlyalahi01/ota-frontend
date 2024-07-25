@@ -36,7 +36,7 @@ export interface IProperty {
   property_country: string;
   longitude: number;
   latitude: number;
-  amenities: Amenity[];
+  amenities: string[];
   checkin_time: string;
   checkout_time: string;
   food_and_dinning: FoodAndDinning[];
@@ -65,15 +65,12 @@ export const defaultProperty: IProperty = {
   property_country: '',
   longitude: 0,
   latitude: 0,
-  amenities: [{
-    label: "",
-    value: [""]
-  }],
+  amenities: [],
   checkin_time: '',
   checkout_time: '',
   food_and_dinning: [],
   property_policies: [],
-  rule_allowed: ["Car Parking"],
-  rule_not_allowed: ["Smoking"],
+  rule_allowed: [],
+  rule_not_allowed: [],
   status: 'ACTIVE',
 }

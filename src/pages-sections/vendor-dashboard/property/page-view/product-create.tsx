@@ -4,7 +4,7 @@ import PropertyForm from "../property-form";
 
 export default function ProductCreatePageView() {
   return (
-    <PageWrapper title="Add New Product">
+    <PageWrapper title="Add Property">
       <PropertyForm />
     </PageWrapper>
   );
