@@ -92,7 +92,7 @@ export const CustomTimePicker: React.FC<{
                 },
                 "& .MuiInputBase-root": {
                     backgroundColor: "white",
-                },
+                },                
             }}
         />
     );

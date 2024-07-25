@@ -3,7 +3,8 @@ interface ImageAlbum {
 }
 
 interface Amenity {
-  name: string[];
+  label: string;
+  value: string[];
 }
 
 interface Kitchen {
@@ -64,12 +65,15 @@ export const defaultProperty: IProperty = {
   property_country: '',
   longitude: 0,
   latitude: 0,
-  amenities: [],
+  amenities: [{
+    label: "",
+    value: [""]
+  }],
   checkin_time: '',
   checkout_time: '',
   food_and_dinning: [],
   property_policies: [],
-  rule_allowed: [],
-  rule_not_allowed: [],
+  rule_allowed: ["Car Parking"],
+  rule_not_allowed: ["Smoking"],
   status: 'ACTIVE',
 }

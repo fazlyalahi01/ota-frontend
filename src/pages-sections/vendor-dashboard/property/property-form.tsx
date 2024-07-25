@@ -1,26 +1,23 @@
 "use client";
 
-import Box from "@mui/material/Box";
+import { Add, Delete, ExpandMore } from "@mui/icons-material";
+import { Accordion, AccordionDetails, AccordionSummary, Box } from "@mui/material";
 import Button from "@mui/material/Button";
 import Card from "@mui/material/Card";
 import Grid from "@mui/material/Grid";
 import MenuItem from "@mui/material/MenuItem";
-import { useFormik } from "formik";
-import { useState } from "react";
-import * as yup from "yup";
-// GLOBAL CUSTOM COMPONENTS
-import DropZone from "components/DropZone";
-import { FlexBox } from "components/flex-box";
-// STYLED COMPONENTS
+import { api } from "api/api";
+import IncrementalTextfield, { DangerIconButton, PrimaryIconButton } from "components/common/incremental-textfiled";
+import { CustomTimePicker } from "components/form-componet/custom-date-time-picker";
 import CustomFormLabel from "components/form-componet/CustomFormLabel";
 import CustomTextField from "components/form-componet/CustomTextField";
 import { ILocationResponsePayload, LocationAutoComplete } from "components/LocationAutoComplete/LocationAutoComplete";
-import { defaultProperty } from "models/Property.model";
-import { StyledClear, UploadImageBox } from "../styles";
-import { CustomTimePicker } from "components/form-componet/custom-date-time-picker";
-import moment from "moment";
-import { api } from "api/api";
+import { useFormik } from "formik";
 import useAuth from "hooks/useAuth";
+import { produce } from "immer";
+import { defaultProperty } from "models/Property.model";
+import { useState } from "react";
+import * as yup from "yup";
 
 // FORM FIELDS VALIDATION SCHEMA
 const VALIDATION_SCHEMA = yup.object().shape({
@@ -84,6 +81,81 @@ export default function PropertyForm(props: Props) {
       property_pincode: data.postalCode,
     });
   };
+
+  // handle rule allowed
+
+  const handleRuleAllowed = (index: number, value: string) => {
+    const newValues = produce(values, (draft) => {
+      draft.rule_allowed[index] = value;
+    })
+    setValues(newValues);
+  }
+  const handleAddRuleAllowed = (currentIndex: number) => {
+    const newValues = produce(values, (draft) => {
+      draft.rule_allowed.splice(currentIndex + 1, 0, "");
+    })
+    setValues(newValues);
+  };
+
+  const handleDeleteRuleAllowed = (currentIndex: number) => {
+    console.log(currentIndex, "currentIndex")
+    const newValues = produce(values.rule_allowed, (draft) => {
+      draft.splice(currentIndex, 1);
+    })
+    setFieldValue("rule_allowed", newValues);
+  };
+  // handle rule not allowed
+
+  const handleRuleNotAllowed = (index: number, value: string) => {
+    const newValues = produce(values, (draft) => {
+      draft.rule_not_allowed[index] = value;
+    })
+    setValues(newValues);
+  }
+  const handleAddRuleNotAllowed = (currentIndex: number) => {
+    const newValues = produce(values, (draft) => {
+      draft.rule_not_allowed.splice(currentIndex + 1, 0, "");
+    })
+    setValues(newValues);
+  };
+
+  const handleDeleteRuleNotAllowed = (currentIndex: number) => {
+    console.log(currentIndex, "currentIndex")
+    const newValues = produce(values.rule_not_allowed, (draft) => {
+      draft.splice(currentIndex, 1);
+    })
+    setFieldValue("rule_not_allowed", newValues);
+  };
+
+  
+  // handle amineties 
+  const handleAmenitiesSectionChange = (index: number, label: string) => {
+    const newValues = produce(values, (draft) => {
+      draft.amenities[index]["label"] = label;
+    })
+    setValues(newValues);
+  }
+  const handleAmenitiesChange = (index: number, rowId: number,  value: string) => {
+    const newValues = produce(values, (draft) => {
+      draft.amenities[index][value][rowId] = value;
+    })
+    setValues(newValues);
+  }
+  const handleAddAmenities = (currentIndex: number) => {
+    const newValues = produce(values, (draft) => {
+      draft.rule_not_allowed.splice(currentIndex + 1, 0, "");
+    })
+    setValues(newValues);
+  };
+
+  const handleDeleteAmenities = (currentIndex: number) => {
+    console.log(currentIndex, "currentIndex")
+    const newValues = produce(values.rule_not_allowed, (draft) => {
+      draft.splice(currentIndex, 1);
+    })
+    setFieldValue("rule_not_allowed", newValues);
+  };
+
 
   return (
     <Card className="p-3">
@@ -246,12 +318,81 @@ export default function PropertyForm(props: Props) {
 
             />
           </Grid>
-          <Grid item xs={12} sm={3}>
+
+          <Grid item xs={12} sm={3} spacing={2}>
             <CustomFormLabel>Rule Allowed</CustomFormLabel>
-            
+            {
+              values.rule_allowed?.map((item, index) => (
+                <IncrementalTextfield
+                  key={index}
+                  index={index}
+                  isDisabled={index === 0 && values.rule_allowed?.length === 1}
+                  value={item}
+                  onChange={handleRuleAllowed}
+                  onAdd={handleAddRuleAllowed}
+                  onDelete={handleDeleteRuleAllowed}
+                />
+              ))
+            }
+          </Grid>
+          <Grid item xs={12} sm={3}>
+            <CustomFormLabel>Rule Not Allowed</CustomFormLabel>
+            {
+              values.rule_not_allowed?.map((item, index) => (
+                <IncrementalTextfield
+                  key={index}
+                  index={index}
+                  isDisabled={index === 0 && values.rule_not_allowed?.length === 1}
+                  value={item}
+                  onChange={handleRuleNotAllowed}
+                  onAdd={handleAddRuleNotAllowed}
+                  onDelete={handleDeleteRuleNotAllowed}
+                />
+              ))
+            }
           </Grid>
 
-          <Grid item xs={12}>
+          <Grid item xs={12} sm={6}>
+            <CustomFormLabel>Amenities</CustomFormLabel>
+            {
+              values.amenities?.map((item, index) => (
+                <Accordion key={index}>
+                  <AccordionSummary expandIcon={<ExpandMore />} key={index}>
+                    <CustomTextField
+                      fullWidth
+                      placeholder="Section name"                      
+                      onChange={(e)=>handleAmenitiesSectionChange(index, e.target.value)}
+                      value={item.label}
+                    />
+                    <PrimaryIconButton >
+                      <Add fontSize="small" />
+                    </PrimaryIconButton>
+                    <DangerIconButton >
+                      <Delete fontSize="small" />
+                    </DangerIconButton>
+                  </AccordionSummary>
+
+                  <AccordionDetails>
+                    {
+                      item?.value?.map((data, rowId) => (
+                        <IncrementalTextfield
+                          key={index}
+                          index={index}
+                          placeholder="Amenitiy name"
+                          isDisabled={index === 0 && values.rule_not_allowed?.length === 1}
+                          value={data}
+                          onChange={handleAmenitiesChange}
+                          onAdd={handleAddAmenities}
+                          onDelete={handleDeleteAmenities}
+                        />
+                      ))
+                    }
+                  </AccordionDetails>
+                </Accordion>
+              ))
+            }
+          </Grid>
+          <Grid item md={12}>
             <Button variant="contained" color="info" type="submit">
               Save product
             </Button>
