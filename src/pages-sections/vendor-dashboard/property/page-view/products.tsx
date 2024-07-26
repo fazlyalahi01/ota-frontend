@@ -12,12 +12,12 @@ import { TableHeader, TablePagination } from "components/data-table";
 // GLOBAL CUSTOM HOOK
 import useMuiTable from "hooks/useMuiTable";
 //  LOCAL CUSTOM COMPONENT
-import ProductRow from "../product-row";
 import SearchArea from "../../search-box";
 import PageWrapper from "../../page-wrapper";
 // CUSTOM DATA MODEL
 import { IProperty } from "models/Property.model";
 import { getAllProperty } from "utils/__api__/property";
+import ProductRow from "../_components/product-row";
 
 // TABLE HEADING DATA LIST
 const tableHeading = [

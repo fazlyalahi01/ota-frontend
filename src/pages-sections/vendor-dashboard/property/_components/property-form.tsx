@@ -9,14 +9,14 @@ import useAuth from "hooks/useAuth";
 import { defaultProperty } from "models/Property.model";
 import React, { useState } from "react";
 import * as yup from "yup";
-import { PropertyFormButton } from "./_components/form-button";
-import { PropertyFormStepFive } from "./_components/step-five";
-import { PropertyFormStepFour } from "./_components/step-four";
-import { PropertyFormStepOne } from "./_components/step-one";
-import { PropertyFormStepThree } from "./_components/step-three";
-import { PropertyFormStepTwo } from "./_components/step-two";
-import { getPropertyDetails } from "../.././../utils/__api__/property"
 import { api } from "utils/api";
+import { getPropertyDetails } from "utils/__api__/property";
+import { PropertyFormButton } from "./form-button";
+import { PropertyFormStepFive } from "./step-five";
+import { PropertyFormStepFour } from "./step-four";
+import { PropertyFormStepOne } from "./step-one";
+import { PropertyFormStepThree } from "./step-three";
+import { PropertyFormStepTwo } from "./step-two";
 
 // FORM FIELDS VALIDATION SCHEMA
 const VALIDATION_SCHEMA = yup.object().shape({

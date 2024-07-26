@@ -8,8 +8,10 @@ import { FlexBox } from "components/flex-box";
 import { Paragraph, Small } from "components/Typography";
 // CUSTOM UTILS LIBRARY FUNCTION
 import { IProperty } from "models/Property.model";
+import { CategoryWrapper, StyledTableCell, StyledTableRow, StyledIconButton } from "../../styles";
+
 // STYLED COMPONENTS
-import { CategoryWrapper, StyledIconButton, StyledTableCell, StyledTableRow } from "../styles";
+
 
 // ========================================================================
 

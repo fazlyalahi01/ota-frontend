@@ -1,6 +1,6 @@
 import { Metadata } from "next";
 import PageWrapper from "pages-sections/vendor-dashboard/page-wrapper";
-import PropertyForm from "pages-sections/vendor-dashboard/property/property-form";
+import PropertyForm from "pages-sections/vendor-dashboard/property/_components/property-form";
 
 export const metadata: Metadata = {
   title: "Product - Bazaar Next.js E-commerce Template",
