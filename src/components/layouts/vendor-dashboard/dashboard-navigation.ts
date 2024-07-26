@@ -12,6 +12,14 @@ export const navigation = [
       { name: "Create Property", path: "/property/properties/manage-property" },
     ]
   },
+  {
+    name: "Room",
+    icon: duotone.ElementHub,
+    children: [
+      { name: "Room Type", path: "/property/room-type" },
+      { name: "Room Details", path: "/property/room-details" },
+    ]
+  },
 
   {
     name: "Categories",

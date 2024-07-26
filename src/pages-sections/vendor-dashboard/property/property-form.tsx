@@ -16,7 +16,7 @@ import { PropertyFormStepFour } from "./_components/step-four";
 import { PropertyFormStepOne } from "./_components/step-one";
 import { PropertyFormStepThree } from "./_components/step-three";
 import { PropertyFormStepTwo } from "./_components/step-two";
-import { getPropertyDetails } from "../.././../utils/__api__/vendor"
+import { getPropertyDetails } from "../.././../utils/__api__/property"
 
 // FORM FIELDS VALIDATION SCHEMA
 const VALIDATION_SCHEMA = yup.object().shape({
@@ -58,8 +58,6 @@ export default function PropertyForm({ propertyId }: Props) {
       );
     }
   });
-
-  console.log(values, "values")
 
   // HANDLE UPDATE NEW IMAGE VIA DROP ZONE
   const handleChangeDropZone = (files: File[]) => {
@@ -147,9 +145,6 @@ export default function PropertyForm({ propertyId }: Props) {
                 />
               )
             }
-
-
-
             <Grid item md={12}>
               <PropertyFormButton
                 activeStep={activeStep}

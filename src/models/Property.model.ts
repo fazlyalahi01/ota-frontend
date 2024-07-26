@@ -26,7 +26,7 @@ export interface IProperty {
   property_details_uuid: string;
   property_details_name: string;
   property_type: PropertyType;
-  property_images: ImageAlbum[];
+  property_images: any[];
   about_property: string;
   property_address_line_1: string;
   property_address_line_2?: string;

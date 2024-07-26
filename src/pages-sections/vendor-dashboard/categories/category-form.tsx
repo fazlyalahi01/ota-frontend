@@ -48,6 +48,7 @@ export default function CategoryForm(props: Props) {
     setFiles((files) => files.filter((item) => item.name !== file.name));
   };
 
+  
   return (
     <Card className="p-3">
       <Formik
