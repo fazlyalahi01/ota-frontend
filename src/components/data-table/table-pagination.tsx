@@ -28,7 +28,11 @@ const StyledPagination = styled(Pagination)(({ theme }) => ({
     color: theme.palette.info.main,
     border: `1px solid ${theme.palette.info.main}`,
     "&:hover": { backgroundColor: "transparent" }
-  }
+  }, 
+  // border: `1px solid ${theme.palette.info.main}`,
+  // width: "100%", 
+  // textAlign: "right"
+
 }));
 
 export default function TablePagination(props: PaginationProps) {

@@ -4,9 +4,7 @@ import { api } from "utils/api";
 export const getAllProperty = async() => {
   try {
     const response = await api.get("/property/get-property");
-    console.log(response)
     const data = response.data.data;
-    console.log(data)
     return data;
   } catch (error) {
     throw error;

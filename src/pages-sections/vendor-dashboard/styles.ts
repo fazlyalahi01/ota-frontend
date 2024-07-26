@@ -19,6 +19,7 @@ const CategoryWrapper = styled(Box)(({ theme }) => ({
   padding: "3px 12px",
   borderRadius: "16px",
   display: "inline-block",
+  textTransform: "capitalize",
   color: theme.palette.grey[900],
   backgroundColor: theme.palette.grey[200],
 }));

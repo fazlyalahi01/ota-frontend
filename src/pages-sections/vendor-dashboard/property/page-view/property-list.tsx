@@ -17,7 +17,7 @@ import PageWrapper from "../../page-wrapper";
 // CUSTOM DATA MODEL
 import { IProperty } from "models/Property.model";
 import { getAllProperty } from "utils/__api__/property";
-import ProductRow from "../_components/product-row";
+import ProductRow from "pages-sections/vendor-dashboard/property/_components/product-row";
 
 // TABLE HEADING DATA LIST
 const tableHeading = [
@@ -33,7 +33,7 @@ const tableHeading = [
 
 // =============================================================================
 
-export default function ProductsPageView() {
+export default function PropertyListView() {
 
   const [properties, setProperties] = React.useState<IProperty[]>([])
   React.useEffect(() => {

@@ -1,7 +1,6 @@
 import { Metadata } from "next";
-import { ProductsPageView } from "pages-sections/vendor-dashboard/property/page-view";
-// API FUNCTIONS
-import api from "utils/__api__/dashboard";
+import RoomTypeListView from "pages-sections/vendor-dashboard/room-type/page-view/room-type-list";
+
 
 export const metadata: Metadata = {
   title: "Products - Bazaar Next.js E-commerce Template",
@@ -11,5 +10,5 @@ export const metadata: Metadata = {
 };
 
 export default async function Products() {
-  return <ProductsPageView />;
+  return <RoomTypeListView />;
 }

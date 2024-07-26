@@ -1,6 +1,5 @@
 import { Metadata } from "next";
-import { ProductsPageView } from "pages-sections/vendor-dashboard/property/page-view";
-// API FUNCTIONS
+import PropertyListView from "pages-sections/vendor-dashboard/property/page-view/property-list";
 
 
 export const metadata: Metadata = {
@@ -12,5 +11,5 @@ export const metadata: Metadata = {
 
 export default async function Products() {
    
-  return <ProductsPageView />;
+  return <PropertyListView />;
 }
