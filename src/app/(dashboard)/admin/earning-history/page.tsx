@@ -4,7 +4,7 @@ import { EarningHistoryPageView } from "pages-sections/vendor-dashboard/earning-
 import api from "utils/__api__/dashboard";
 
 export const metadata: Metadata = {
-  title: "Earning History - Bazaar Next.js E-commerce Template",
+  title: "Earning History - OTA Hole Managements",
   description: `Bazaar is a React Next.js E-commerce template. Build SEO friendly Online store, delivery app and Multi vendor store`,
   authors: [{ name: "UI-LIB", url: "https://ui-lib.com" }],
   keywords: ["e-commerce", "e-commerce template", "next.js", "react"]

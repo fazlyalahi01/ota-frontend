@@ -4,7 +4,7 @@ import { BrandsPageView } from "pages-sections/vendor-dashboard/brands/page-view
 import api from "utils/__api__/dashboard";
 
 export const metadata: Metadata = {
-  title: "Brands - Bazaar Next.js E-commerce Template",
+  title: "Brands - OTA Hole Managements",
   description: `Bazaar is a React Next.js E-commerce template. Build SEO friendly Online store, delivery app and Multi vendor store`,
   authors: [{ name: "UI-LIB", url: "https://ui-lib.com" }],
   keywords: ["e-commerce", "e-commerce template", "next.js", "react"]

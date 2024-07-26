@@ -2,7 +2,7 @@ import { Metadata } from "next";
 import GiftShopPageView from "pages-sections/gift-shop/page-view";
 
 export const metadata: Metadata = {
-  title: "Gift Shop - Bazaar Next.js E-commerce Template",
+  title: "Gift Shop - OTA Hole Managements",
   description: `Bazaar is a React Next.js E-commerce template. Build SEO friendly Online store, delivery app and Multi vendor store`,
   authors: [{ name: "UI-LIB", url: "https://ui-lib.com" }],
   keywords: ["e-commerce", "e-commerce template", "next.js", "react"]
