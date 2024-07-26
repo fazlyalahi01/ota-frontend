@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import React, { useState } from "react";
 import Card from "@mui/material/Card";
 import Stack from "@mui/material/Stack";
 import Table from "@mui/material/Table";
@@ -17,6 +17,7 @@ import SearchArea from "../../search-box";
 import PageWrapper from "../../page-wrapper";
 // CUSTOM DATA MODEL
 import { IProperty } from "models/Property.model";
+import { getAllProperty } from "utils/__api__/property";
 
 // TABLE HEADING DATA LIST
 const tableHeading = [
@@ -29,18 +30,19 @@ const tableHeading = [
 ];
 
 // =============================================================================
-type Props = { products: IProperty[] };
+
 // =============================================================================
 
-export default function ProductsPageView({ products }: Props) {
-  const [productList, setProductList] = useState<IProperty[]>([...products]);
+export default function ProductsPageView() {
 
-  // RESHAPE THE PRODUCT LIST BASED TABLE HEAD CELL ID
-  // const filteredProducts = productList.map((item) => ({
-  //   property_details_uuid: item.property_details_uuid,
-  //   property_details_name: item.property_details_name,
-  //   insert_ts: item.insert_ts,    
-  // }));
+  const [properties, setProperties] = React.useState<IProperty[]>([])
+  React.useEffect(() => {
+    const fetchData = async () => {
+      const data = await getAllProperty();
+      setProperties(data)
+    }
+    fetchData()
+  }, [])
 
   const {
     order,
@@ -50,7 +52,7 @@ export default function ProductsPageView({ products }: Props) {
     filteredList,
     handleChangePage,
     handleRequestSort
-  } = useMuiTable({ listData: productList });
+  } = useMuiTable({ listData: properties });
 
   return (
     <PageWrapper title="Property List">
@@ -70,13 +72,13 @@ export default function ProductsPageView({ products }: Props) {
                 hideSelectBtn
                 orderBy={orderBy}
                 heading={tableHeading}
-                rowCount={products.length}
+                rowCount={properties.length}
                 numSelected={selected.length}
                 onRequestSort={handleRequestSort}
               />
 
               <TableBody>
-                {productList.map((product, index) => (
+                {properties.map((product, index) => (
                   <ProductRow key={index} product={product} />
                 ))}
               </TableBody>
@@ -87,7 +89,7 @@ export default function ProductsPageView({ products }: Props) {
         <Stack alignItems="center" my={4}>
           <TablePagination
             onChange={handleChangePage}
-            count={Math.ceil(products.length / rowsPerPage)}
+            count={Math.ceil(properties.length / rowsPerPage)}
           />
         </Stack>
       </Card>

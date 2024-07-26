@@ -77,7 +77,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = (
             if (diff <= 1) {
                 setUserInfo(data);
                 // Set the token in API headers
-                api.defaults.headers.common["Authorization"] = `Bearer ${data.token}`;
+                api.defaults.headers.common["auth-Token"] = `${data.token}`;
             }
         }
         setLoading(false);
@@ -126,7 +126,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = (
             setUserInfo(userData);
 
             // // Set the token in API headers
-            // api.defaults.headers.common["Authorization"] = `Bearer ${userData.token}`;
+            // api.defaults.headers.common["auth-Token"] = `${userData.token}`;
 
             onSuccess();
 
