@@ -12,7 +12,7 @@ pnpm dev
 
 ## Folder Structure followed
 
-Src >     
+```Src >     
     app > 
         (auth) > authentication
                 login
@@ -32,7 +32,7 @@ Src >
     pages-sections -- all pages and layout structures 
     theme -- color, fonts
     utils -- api configuration + get api functions 
-
+```
 
 
 
