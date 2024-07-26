@@ -1,6 +1,5 @@
 import { cache } from "react";
 import axios from "../../utils/axiosInstance";
-import { api } from "api/api";
 
 const getAllProductReviews = cache(async () => {
   const response = await axios.get("/api/vendor/product-reviews");

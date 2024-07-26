@@ -1,6 +1,6 @@
-import { api } from "api/api"
 import NextAuth from "next-auth"
 import Credentials from "next-auth/providers/credentials"
+import { api } from "utils/api"
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
   session: {

@@ -2,7 +2,6 @@
 
 import Card from "@mui/material/Card";
 import Grid from "@mui/material/Grid";
-import { api } from "api/api";
 import CustomStepper from "components/common/custom-stepper";
 import { ILocationResponsePayload } from "components/LocationAutoComplete/LocationAutoComplete";
 import { useFormik } from "formik";
@@ -17,6 +16,7 @@ import { PropertyFormStepOne } from "./_components/step-one";
 import { PropertyFormStepThree } from "./_components/step-three";
 import { PropertyFormStepTwo } from "./_components/step-two";
 import { getPropertyDetails } from "../.././../utils/__api__/property"
+import { api } from "utils/api";
 
 // FORM FIELDS VALIDATION SCHEMA
 const VALIDATION_SCHEMA = yup.object().shape({

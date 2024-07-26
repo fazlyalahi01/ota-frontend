@@ -4,8 +4,8 @@ import Brand from "models/Brand.model";
 import Order from "models/Order.model";
 import Review from "models/Review.model";
 import Category from "models/Category.model";
-import { api } from "api/api";
-import { IProduct } from "models/Product.model";
+import { api } from "utils/api";
+import { IProperty } from "models/Property.model";
 
 // dashboard
 const getAllCard = cache(async () => {
@@ -24,7 +24,7 @@ const stockOutProducts = cache(async () => {
 });
 
 // products
-const products = cache(async (): Promise<IProduct[]> => {
+const products = cache(async (): Promise<IProperty[]> => {
   const response = await api.get("/property/get-property");
   return response.data.data;
 });

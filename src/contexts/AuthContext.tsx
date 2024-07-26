@@ -1,9 +1,9 @@
 "use client";
-import { api } from "api/api";
 import Cookies from 'js-cookie';
 import { jwtDecode } from "jwt-decode";
 import { useRouter } from "next/navigation";
 import React, { createContext, useEffect, useState } from "react";
+import { api } from 'utils/api';
 
 export interface IAuth {
     userInfo: {
