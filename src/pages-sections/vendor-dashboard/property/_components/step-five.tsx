@@ -23,14 +23,14 @@ export function PropertyFormStepFive({ values, handleChange, setValues }: Props)
       };
     return (
         <>
-            <Grid item xs={12} sm={3}>
+            <Grid item xs={12} sm={12}>
                 <CustomFormLabel>Location</CustomFormLabel>
                 <LocationAutoComplete
                     value={values.property_address_line_1}
                     onLocationChange={handleLocation}
                 />
             </Grid>
-            <Grid item xs={12} sm={3}>
+            <Grid item xs={12} sm={4}>
                 <CustomFormLabel>Property Address Line 1</CustomFormLabel>
                 <CustomTextField
                     type="text"
@@ -41,7 +41,7 @@ export function PropertyFormStepFive({ values, handleChange, setValues }: Props)
                     onChange={handleChange}
                 />
             </Grid>
-            <Grid item xs={12} sm={3}>
+            <Grid item xs={12} sm={4}>
                 <CustomFormLabel>Address Line 2</CustomFormLabel>
                 <CustomTextField
                     type="text"
@@ -52,7 +52,7 @@ export function PropertyFormStepFive({ values, handleChange, setValues }: Props)
                     onChange={handleChange}
                 />
             </Grid>
-            <Grid item xs={12} sm={3}>
+            <Grid item xs={12} sm={4}>
                 <CustomFormLabel>City</CustomFormLabel>
                 <CustomTextField
                     type="text"
@@ -63,7 +63,7 @@ export function PropertyFormStepFive({ values, handleChange, setValues }: Props)
                     onChange={handleChange}
                 />
             </Grid>
-            <Grid item xs={12} sm={3}>
+            <Grid item xs={12} sm={4}>
                 <CustomFormLabel>State</CustomFormLabel>
                 <CustomTextField
                     type="text"
@@ -75,7 +75,7 @@ export function PropertyFormStepFive({ values, handleChange, setValues }: Props)
                 />
             </Grid>
 
-            <Grid item xs={12} sm={3}>
+            <Grid item xs={12} sm={4}>
                 <CustomFormLabel>Pincode</CustomFormLabel>
                 <CustomTextField
                     type="text"
@@ -87,7 +87,7 @@ export function PropertyFormStepFive({ values, handleChange, setValues }: Props)
                 />
             </Grid>
 
-            <Grid item xs={12} sm={3}>
+            <Grid item xs={12} sm={4}>
                 <CustomFormLabel>Country</CustomFormLabel>
                 <CustomTextField
                     type="text"
@@ -98,7 +98,7 @@ export function PropertyFormStepFive({ values, handleChange, setValues }: Props)
                     onChange={handleChange}
                 />
             </Grid>
-            <Grid item xs={12} sm={3}>
+            <Grid item xs={12} sm={6}>
                 <CustomFormLabel>Longitude</CustomFormLabel>
                 <CustomTextField
                     type="number"
@@ -109,7 +109,7 @@ export function PropertyFormStepFive({ values, handleChange, setValues }: Props)
                     onChange={handleChange}
                 />
             </Grid>
-            <Grid item xs={12} sm={3}>
+            <Grid item xs={12} sm={6}>
                 <CustomFormLabel>Latitude</CustomFormLabel>
                 <CustomTextField
                     type="number"

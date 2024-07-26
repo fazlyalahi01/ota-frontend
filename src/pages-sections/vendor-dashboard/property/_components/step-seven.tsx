@@ -13,7 +13,7 @@ interface Props {
 export function PropertyFormStepSeven({ values, handleChange, setFieldValue }: Props) {
     return (
         <>
-            <Grid item xs={12} sm={3}>
+            <Grid item xs={12} sm={6}>
                 <CustomFormLabel>Check in</CustomFormLabel>
                 <CustomTimePicker
                     fullWidth
@@ -24,7 +24,7 @@ export function PropertyFormStepSeven({ values, handleChange, setFieldValue }: P
 
                 />
             </Grid>
-            <Grid item xs={12} sm={3}>
+            <Grid item xs={12} sm={6}>
                 <CustomFormLabel>Check out</CustomFormLabel>
                 <CustomTimePicker
                     fullWidth

@@ -39,8 +39,8 @@ export interface IProperty {
   amenities: string[];
   checkin_time: string;
   checkout_time: string;
-  food_and_dinning: FoodAndDinning[];
-  property_policies: PropertyPolicy[];
+  food_and_dinning: string[];
+  property_policies: string[];
   rule_allowed: string[];
   rule_not_allowed: string[];
   status: Status;

@@ -13,7 +13,7 @@ interface Props {
 export function PropertyFormStepOne({ values, handleChange, touched, errors }: Props) {
     return (
         <>
-            <Grid item sm={3} xs={12}>
+            <Grid item sm={9} xs={12}>
                 <CustomFormLabel>Property Name</CustomFormLabel>
                 <CustomTextField
                     fullWidth
