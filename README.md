@@ -16,13 +16,13 @@ pnpm dev
 - **public**: images/ icons
 - **src**
     - **app**: Contains the main application logic and components.
-        - **(auth)**: Handles authentication-related components.
+        - **(auth)**
             - **login**
             - **register**
-        - **(dashboard)**: Contains everything related to the dashboard.
+        - **(dashboard)**
             - **admin**: super admin
             - **property**: vendor
-        - **(main)**: Includes all components visible in the frontend.
+        - **(main)**
     - **components**: Commonly used components across the application.
     - **constants**: Holds all constant values used in the project.
     - **contexts**: Contains context providers for state management.
