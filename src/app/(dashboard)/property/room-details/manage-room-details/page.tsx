@@ -1,5 +1,6 @@
 import { Metadata } from "next";
 import PageWrapper from "pages-sections/vendor-dashboard/page-wrapper";
+import RoomDetailsForm from "pages-sections/vendor-dashboard/room-details/_components/room-details-form";
 import RoomTypeForm from "pages-sections/vendor-dashboard/room-type/_components/room-type-form";
 
 export const metadata: Metadata = {
@@ -9,8 +10,8 @@ export const metadata: Metadata = {
   keywords: ["e-commerce", "e-commerce template", "next.js", "react"]
 };
 
-export default function CreateRoomType() {
+export default function CreateRoomDetails() {
   return (
-      <RoomTypeForm />
+      <RoomDetailsForm />
   );
 }

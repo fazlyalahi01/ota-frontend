@@ -1,4 +1,5 @@
 import { Metadata } from "next";
+import RoomDetailsListView from "pages-sections/vendor-dashboard/room-details/page-view/room-details-list";
 import RoomTypeListView from "pages-sections/vendor-dashboard/room-type/page-view/room-type-list";
 
 
@@ -9,6 +10,6 @@ export const metadata: Metadata = {
   keywords: ["e-commerce", "e-commerce template", "next.js", "react"]
 };
 
-export default async function RoomTypes() {
-  return <RoomTypeListView />;
+export default async function RoomDetails() {
+  return <RoomDetailsListView />;
 }

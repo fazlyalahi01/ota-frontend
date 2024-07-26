@@ -6,12 +6,12 @@ import Edit from "@mui/icons-material/Edit";
 import { FlexBox } from "components/flex-box";
 import { Paragraph, Small } from "components/Typography";
 // CUSTOM UTILS LIBRARY FUNCTION
-import { IRoomType } from "models/Room-type.model";
+import { IRoomDetails } from "models/Room-details.model";
 import { CategoryWrapper, StyledIconButton, StyledTableCell, StyledTableRow } from "../../styles";
 
 
-export default function RoomTypeTableRow({ item }: { item: IRoomType }) {
-  const { room_types_uuid, property_details_name, types_name, total_room, status } = item || {};
+export default function RoomDetailsTableRow({ item }: { item: IRoomDetails }) {
+  const { room_details_uuid, room_area, bed_type, view_type, max_no_of_guests } = item || {};
 
   const router = useRouter();
   // const [productPublish, setProductPublish] = useState(published);
@@ -21,21 +21,21 @@ export default function RoomTypeTableRow({ item }: { item: IRoomType }) {
       <StyledTableCell align="left">
         <FlexBox alignItems="center" gap={1.5}>
           <div>
-            <Paragraph fontWeight={600}>{property_details_name}</Paragraph>
-            <Small color="grey.600">#{room_types_uuid}</Small>
+            <Paragraph fontWeight={600}>{room_area}</Paragraph>
+            <Small color="grey.600">#{room_details_uuid}</Small>
           </div>
         </FlexBox>
       </StyledTableCell>
 
       <StyledTableCell align="left">
-        <CategoryWrapper>{types_name}</CategoryWrapper>
+        <CategoryWrapper>{bed_type}</CategoryWrapper>
       </StyledTableCell>
 
-      <StyledTableCell align="left">{total_room || "--"}</StyledTableCell>
-      <StyledTableCell align="left">{status || "--"}</StyledTableCell>
+      <StyledTableCell align="left">{view_type || "--"}</StyledTableCell>      
+      <StyledTableCell align="left">{max_no_of_guests || "--"}</StyledTableCell>      
 
       <StyledTableCell align="center">
-        <StyledIconButton onClick={() => router.push(`/property/room-type/${room_types_uuid}`)}>
+        <StyledIconButton onClick={() => router.push(`/property/room-details/${room_details_uuid}`)}>
           <Edit />
         </StyledIconButton>
 

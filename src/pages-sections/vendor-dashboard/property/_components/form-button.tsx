@@ -1,8 +1,4 @@
-import { Button, Grid, MenuItem, Stack } from "@mui/material";
-import { CustomTimePicker } from "components/form-componet/custom-date-time-picker";
-import CustomFormLabel from "components/form-componet/CustomFormLabel";
-import CustomTextField from "components/form-componet/CustomTextField";
-import { IProperty } from "models/Property.model";
+import { Button, Stack } from "@mui/material";
 
 interface Props {
     activeStep: number;

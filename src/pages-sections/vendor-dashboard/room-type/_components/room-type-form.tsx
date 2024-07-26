@@ -20,7 +20,7 @@ import * as yup from "yup";
 
 // FORM FIELDS VALIDATION SCHEMA
 const VALIDATION_SCHEMA = yup.object().shape({
-    property_details_name: yup.string().required("Property Name is required!"),
+    types_name: yup.string().required("This field is required!"),
 });
 
 // ================================================================
@@ -30,7 +30,6 @@ interface Props {
 // ================================================================
 
 export default function RoomTypeForm({ uuid }: Props) {
-    const { userInfo } = useAuth();
 
     const {
         values,
