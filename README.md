@@ -12,27 +12,21 @@ pnpm dev
 
 ## Folder Structure followed
 
-```Src >     
-    app > 
-        (auth) > authentication
-                login
-                register 
+## Description of Each Directory
 
-        (dashboard) > dashbaord related everything
-                    admin
-                    property
-
-        (main) > everything you see in the frontend    
-    components -- Common componets 
-    constants -- All constants 
-    contexts -- all contexts    
-    hooks -- all providers 
-    lib -- custom functions 
-    models -- types and interface
-    pages-sections -- all pages and layout structures 
-    theme -- color, fonts
-    utils -- api configuration + get api functions 
-```
+- **app**: Contains the main application logic and components.
+  - **(auth)**: Handles authentication-related components.
+  - **(dashboard)**: Contains everything related to the dashboard.
+  - **(main)**: Includes all components visible in the frontend.
+- **components**: Commonly used components across the application.
+- **constants**: Holds all constant values used in the project.
+- **contexts**: Contains context providers for state management.
+- **hooks**: Custom React hooks for reusable logic.
+- **lib**: Custom utility functions.
+- **models**: Type definitions and interfaces.
+- **pages-sections**: Layout structures and pages.
+- **theme**: Defines colors and fonts for the application.
+- **utils**: API configuration and functions for API calls.
 
 
 
