@@ -1,125 +1,159 @@
-import { Grid, MenuItem } from "@mui/material";
+import { FormControlLabel, FormGroup, Grid } from "@mui/material";
+import { CustomCheckbox } from "components/form-componet/custom-checkbox";
 import CustomFormLabel from "components/form-componet/CustomFormLabel";
-import CustomTextField from "components/form-componet/CustomTextField";
-import { ILocationResponsePayload, LocationAutoComplete } from "components/LocationAutoComplete/LocationAutoComplete";
 import { IProperty } from "models/Property.model";
+import { produce } from "immer"
+import { allowed_rules, amenities, foodDinning, not_allowed_rules, propertyPolicy } from "constants/constants";
 
 interface Props {
     values: IProperty;
+    setValues: any;
     handleChange: any;
-    setValues: any; 
 }
 
+
+
+
 export function PropertyFormStepFive({ values, handleChange, setValues }: Props) {
-    const handleLocation = (data: ILocationResponsePayload) => {
-        setValues({
-          ...values,
-          property_address_line_2: data.address,
-          property_city: data.city,
-          property_state: data.state,
-          property_country: data.country,
-          property_pincode: data.postalCode,
-        });
-      };
+
+    const handleAllowedCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const { name, checked } = event.target;
+        const newRuleAllowed = checked
+            ? [...values.rule_allowed, name]
+            : values.rule_allowed.filter(rule => rule !== name);
+        setValues({ ...values, rule_allowed: newRuleAllowed });
+    }
+    const handleNotAllowedCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const { name, checked } = event.target;
+        const newRuleAllowed = checked
+            ? [...values.rule_not_allowed, name]
+            : values.rule_not_allowed.filter(rule => rule !== name);
+        setValues({ ...values, rule_not_allowed: newRuleAllowed });
+    }
+    const handleAmenitiesCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const { name, checked } = event.target;
+        const newRuleAllowed = checked
+            ? [...values.amenities, name]
+            : values.amenities.filter(rule => rule !== name);
+        setValues({ ...values, amenities: newRuleAllowed });
+    }
+    const handleFoodDinningCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const { name, checked } = event.target;
+        const newRuleAllowed = checked
+            ? [...values.food_and_dinning, name]
+            : values.food_and_dinning.filter(rule => rule !== name);
+        setValues({ ...values, food_and_dinning: newRuleAllowed });
+    }
+    const handlePropertyPolicyCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const { name, checked } = event.target;
+        const newRuleAllowed = checked
+            ? [...values.property_policies, name]
+            : values.property_policies.filter(rule => rule !== name);
+        setValues({ ...values, property_policies: newRuleAllowed });
+    }
     return (
         <>
-            <Grid item xs={12} sm={12}>
-                <CustomFormLabel>Location</CustomFormLabel>
-                <LocationAutoComplete
-                    value={values.property_address_line_1}
-                    onLocationChange={handleLocation}
-                />
+            <Grid item xs={12} sm={4} spacing={2}>
+                <CustomFormLabel>Rule Allowed</CustomFormLabel>
+                <FormGroup>
+                    {
+                        allowed_rules?.map((item, index) => (
+                            <FormControlLabel
+                                key={index}
+                                label={item}
+                                control={
+                                    <CustomCheckbox
+                                        checked={values.rule_allowed.includes(item)}
+                                        onChange={handleAllowedCheckboxChange}
+                                        name={item}
+                                    />
+                                }
+                            />
+                        ))
+                    }
+                </FormGroup>
             </Grid>
-            <Grid item xs={12} sm={4}>
-                <CustomFormLabel>Property Address Line 1</CustomFormLabel>
-                <CustomTextField
-                    type="text"
-                    color="info"
-                    name="property_address_line_1"
-                    fullWidth
-                    value={values.property_address_line_1}
-                    onChange={handleChange}
-                />
+            <Grid item xs={12} sm={4} spacing={2}>
+                <CustomFormLabel>Rule Not Allowed</CustomFormLabel>
+                <FormGroup>
+                    {
+                        not_allowed_rules?.map((item, index) => (
+                            <FormControlLabel
+                                key={index}
+                                label={item}
+                                control={
+                                    <CustomCheckbox
+                                        checked={values.rule_not_allowed.includes(item)}
+                                        onChange={handleNotAllowedCheckboxChange}
+                                        name={item}
+                                    />
+                                }
+                            />
+                        ))
+                    }
+                </FormGroup>
             </Grid>
-            <Grid item xs={12} sm={4}>
-                <CustomFormLabel>Address Line 2</CustomFormLabel>
-                <CustomTextField
-                    type="text"
-                    color="info"
-                    name="property_address_line_2"
-                    fullWidth
-                    value={values.property_address_line_2}
-                    onChange={handleChange}
-                />
+            <Grid item xs={12} sm={4} spacing={2}>
+                <CustomFormLabel>Amenities</CustomFormLabel>
+                <FormGroup>
+                    {
+                        amenities?.map((item, index) => (
+                            <FormControlLabel
+                                key={index}
+                                label={item}
+                                control={
+                                    <CustomCheckbox
+                                        checked={values.amenities.includes(item)}
+                                        onChange={handleAmenitiesCheckboxChange}
+                                        name={item}
+                                    />
+                                }
+                            />
+                        ))
+                    }
+                </FormGroup>
             </Grid>
-            <Grid item xs={12} sm={4}>
-                <CustomFormLabel>City</CustomFormLabel>
-                <CustomTextField
-                    type="text"
-                    color="info"
-                    name="property_city"
-                    fullWidth
-                    value={values.property_city}
-                    onChange={handleChange}
-                />
+            <Grid item xs={12} sm={4} spacing={2}>
+                <CustomFormLabel>Food and Dinning</CustomFormLabel>
+                <FormGroup>
+                    {
+                        foodDinning?.map((item, index) => (
+                            <FormControlLabel
+                                key={index}
+                                label={item}
+                                control={
+                                    <CustomCheckbox
+                                        checked={values.food_and_dinning.includes(item)}
+                                        onChange={handleFoodDinningCheckboxChange}
+                                        name={item}
+                                    />
+                                }
+                            />
+                        ))
+                    }
+                </FormGroup>
             </Grid>
-            <Grid item xs={12} sm={4}>
-                <CustomFormLabel>State</CustomFormLabel>
-                <CustomTextField
-                    type="text"
-                    color="info"
-                    name="property_state"
-                    fullWidth
-                    value={values.property_state}
-                    onChange={handleChange}
-                />
-            </Grid>
-
-            <Grid item xs={12} sm={4}>
-                <CustomFormLabel>Pincode</CustomFormLabel>
-                <CustomTextField
-                    type="text"
-                    color="info"
-                    name="property_pincode"
-                    fullWidth
-                    value={values.property_pincode}
-                    onChange={handleChange}
-                />
-            </Grid>
-
-            <Grid item xs={12} sm={4}>
-                <CustomFormLabel>Country</CustomFormLabel>
-                <CustomTextField
-                    type="text"
-                    color="info"
-                    name="property_country"
-                    fullWidth
-                    value={values.property_country}
-                    onChange={handleChange}
-                />
-            </Grid>
-            <Grid item xs={12} sm={6}>
-                <CustomFormLabel>Longitude</CustomFormLabel>
-                <CustomTextField
-                    type="number"
-                    color="info"
-                    name="longitude"
-                    fullWidth
-                    value={values.longitude}
-                    onChange={handleChange}
-                />
-            </Grid>
-            <Grid item xs={12} sm={6}>
-                <CustomFormLabel>Latitude</CustomFormLabel>
-                <CustomTextField
-                    type="number"
-                    color="info"
-                    name="latitude"
-                    fullWidth
-                    value={values.latitude}
-                    onChange={handleChange}
-                />
+            <Grid item xs={12} sm={4} spacing={2}>
+                <CustomFormLabel>Property Policy</CustomFormLabel>
+                <FormGroup>
+                    {
+                        propertyPolicy?.map((item, index) => (
+                            <FormControlLabel
+                                key={index}
+                                label={item}
+                                control={
+                                    <CustomCheckbox
+                                        checked={values.property_policies.includes(item)}
+                                        onChange={handlePropertyPolicyCheckboxChange}
+                                        name={item}
+                                    />
+                                }
+                            />
+                        ))
+                    }
+                </FormGroup>
             </Grid>
         </>
     )
 }
+

@@ -15,8 +15,8 @@ import useMuiTable from "hooks/useMuiTable";
 import ProductRow from "../product-row";
 import SearchArea from "../../search-box";
 import PageWrapper from "../../page-wrapper";
-import { IProperty } from "models/Product.model";
 // CUSTOM DATA MODEL
+import { IProperty } from "models/Property.model";
 
 // TABLE HEADING DATA LIST
 const tableHeading = [
@@ -34,8 +34,6 @@ type Props = { products: IProperty[] };
 
 export default function ProductsPageView({ products }: Props) {
   const [productList, setProductList] = useState<IProperty[]>([...products]);
-
-  console.log(productList, "products");
 
   // RESHAPE THE PRODUCT LIST BASED TABLE HEAD CELL ID
   // const filteredProducts = productList.map((item) => ({

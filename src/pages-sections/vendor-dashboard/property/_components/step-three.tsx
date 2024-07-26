@@ -11,9 +11,18 @@ interface Props {
 export function PropertyFormStepThree({ values, handleChange }: Props) {
     return (
         <>
-            <Grid item sm={3} xs={12}>
-                <CustomFormLabel>Images</CustomFormLabel>
-                Images
+            <Grid item xs={12}>
+                <CustomFormLabel>Property Description</CustomFormLabel>
+                <CustomTextField
+                    type="text"
+                    fullWidth
+                    name="about_property"
+                    color="info"
+                    multiline
+                    rows={4}
+                    value={values.about_property}
+                    onChange={handleChange}
+                />
             </Grid>
         </>
     )

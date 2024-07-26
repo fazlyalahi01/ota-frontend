@@ -103,8 +103,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = (
                 password: password,
             });
 
-            console.log(res.data, "res from login action")
-
             const userData: IAuth["userInfo"] = {
                 token: res.data.data.token,
                 user: {

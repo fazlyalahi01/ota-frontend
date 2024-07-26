@@ -5,14 +5,15 @@ import { IProperty } from "models/Property.model";
 
 interface Props {
     values: IProperty;
-    handleChange: any;    
+    handleChange: any;
 }
 
 export function PropertyFormStepTwo({ values, handleChange }: Props) {
     return (
         <>
             <Grid item sm={3} xs={12}>
-                <CustomFormLabel>Price</CustomFormLabel>               
+                <CustomFormLabel>Images</CustomFormLabel>
+                Images
             </Grid>
         </>
     )

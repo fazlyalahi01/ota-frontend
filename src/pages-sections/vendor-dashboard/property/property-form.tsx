@@ -14,10 +14,9 @@ import { PropertyFormButton } from "./_components/form-button";
 import { PropertyFormStepFive } from "./_components/step-five";
 import { PropertyFormStepFour } from "./_components/step-four";
 import { PropertyFormStepOne } from "./_components/step-one";
-import { PropertyFormStepSeven } from "./_components/step-seven";
-import { PropertyFormStepSix } from "./_components/step-six";
 import { PropertyFormStepThree } from "./_components/step-three";
 import { PropertyFormStepTwo } from "./_components/step-two";
+import { getPropertyDetails } from "../.././../utils/__api__/vendor"
 
 // FORM FIELDS VALIDATION SCHEMA
 const VALIDATION_SCHEMA = yup.object().shape({
@@ -25,13 +24,15 @@ const VALIDATION_SCHEMA = yup.object().shape({
 });
 
 // ================================================================
-interface Props { }
+interface Props {
+  propertyId?: string;
+}
 // ================================================================
 
-export default function PropertyForm(props: Props) {
+export default function PropertyForm({ propertyId }: Props) {
   const [files, setFiles] = useState([]);
   const { userInfo } = useAuth();
-  const steps = ['Description', 'Price', 'Images', 'Details', 'Location', 'Amenities', 'Calender'];
+  const steps = ['Description', 'Images', 'Details', 'Location', 'Amenities'];
   const [activeStep, setActiveStep] = React.useState(0);
 
 
@@ -71,17 +72,6 @@ export default function PropertyForm(props: Props) {
     setFiles((files) => files.filter((item) => item.name !== file.name));
   };
 
-  const handleLocation = (data: ILocationResponsePayload) => {
-    setValues({
-      ...values,
-      property_address_line_2: data.address,
-      property_city: data.city,
-      property_state: data.state,
-      property_country: data.country,
-      property_pincode: data.postalCode,
-    });
-  };
-
   // handle Active Step
 
   const handleActiveStep = (buttonType: "back" | "front") => {
@@ -92,6 +82,19 @@ export default function PropertyForm(props: Props) {
     }
 
   }
+  // fetch the data while editing the form
+
+  React.useEffect(() => {
+    if (propertyId) {
+      const fetchData = async () => {
+        const propertyData = await getPropertyDetails(propertyId);
+        console.log(propertyData)
+        setValues(propertyData); // Update form values with fetched data
+      };
+
+      fetchData();
+    }
+  }, [propertyId]);
 
 
   return (
@@ -131,6 +134,7 @@ export default function PropertyForm(props: Props) {
                 <PropertyFormStepFour
                   values={values}
                   handleChange={handleChange}
+                  setValues
                 />
               )
             }
@@ -138,29 +142,12 @@ export default function PropertyForm(props: Props) {
               activeStep === 4 && (
                 <PropertyFormStepFive
                   values={values}
-                  handleChange={handleChange}
-                  setValues
-                />
-              )
-            }
-            {
-              activeStep === 5 && (
-                <PropertyFormStepSix
-                  values={values}
                   setValues={setValues}
                   handleChange={handleChange}
                 />
               )
             }
-            {
-              activeStep === 6 && (
-                <PropertyFormStepSeven
-                  values={values}
-                  handleChange={handleChange}
-                  setFieldValue={setFieldValue}
-                />
-              )
-            }
+
 
 
             <Grid item md={12}>

@@ -9,10 +9,11 @@ export const metadata: Metadata = {
   keywords: ["e-commerce", "e-commerce template", "next.js", "react"]
 };
 
-export default function ProductEdit() {
+export default function ProductEdit({ params: {slug} }) {
+  console.log(slug)
   return (
     <PageWrapper title="Edit Product">
-      <PropertyForm />
+      <PropertyForm propertyId={slug} />
     </PageWrapper>
   );
 }
