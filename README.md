@@ -13,7 +13,7 @@ pnpm dev
 ## Folder Structure followed
 
 ## Description of Each Directory
-
+- **public**: images/ icons
 - **src**
     - **app**: Contains the main application logic and components.
     - **(auth)**: Handles authentication-related components.
