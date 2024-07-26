@@ -10,7 +10,6 @@ export const metadata: Metadata = {
 };
 
 export default function ProductEdit({ params: {slug} }) {
-  console.log(slug)
   return (
     <PageWrapper title="Edit Product">
       <PropertyForm propertyId={slug} />

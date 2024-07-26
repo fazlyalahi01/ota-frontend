@@ -59,19 +59,7 @@ export default function PropertyForm({ propertyId }: Props) {
     }
   });
 
-  // HANDLE UPDATE NEW IMAGE VIA DROP ZONE
-  const handleChangeDropZone = (files: File[]) => {
-    files.forEach((file) => Object.assign(file, { preview: URL.createObjectURL(file) }));
-    setFiles(files);
-  };
-
-  // HANDLE DELETE UPLOAD IMAGE
-  const handleFileDelete = (file: File) => () => {
-    setFiles((files) => files.filter((item) => item.name !== file.name));
-  };
-
   // handle Active Step
-
   const handleActiveStep = (buttonType: "back" | "front") => {
     if (buttonType === "back" && activeStep > 0) {
       setActiveStep((pre) => pre - 1)
@@ -80,14 +68,14 @@ export default function PropertyForm({ propertyId }: Props) {
     }
 
   }
-  // fetch the data while editing the form
 
+  // fetch the data while editing the form
   React.useEffect(() => {
     if (propertyId) {
       const fetchData = async () => {
         const propertyData = await getPropertyDetails(propertyId);
         console.log(propertyData)
-        setValues(propertyData); // Update form values with fetched data
+        setValues(propertyData);
       };
 
       fetchData();
