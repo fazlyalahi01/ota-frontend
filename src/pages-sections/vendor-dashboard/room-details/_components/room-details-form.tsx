@@ -5,6 +5,7 @@ import Card from "@mui/material/Card";
 import Grid from "@mui/material/Grid";
 import { PropertyAutoSearch } from "components/auto-searches/property-auto-search";
 import { RoomTypeAutoSearch } from "components/auto-searches/room-type-auto-search";
+import LoadingDialog from "components/Dialogs/LoadingDialog";
 import DropZone from "components/DropZone";
 import { FlexBox } from "components/flex-box";
 import { CustomCheckbox } from "components/form-componet/custom-checkbox";
@@ -13,6 +14,7 @@ import CustomTextField from "components/form-componet/CustomTextField";
 import { amenities } from "constants/constants";
 import { useFormik } from "formik";
 import { defaultRoomDetails } from "models/Room-details.model";
+import { useRouter } from "next/navigation";
 import PageWrapper from "pages-sections/vendor-dashboard/page-wrapper";
 import { StyledClear, UploadImageBox } from "pages-sections/vendor-dashboard/styles";
 import React from "react";
@@ -34,6 +36,9 @@ interface Props {
 export default function RoomDetailsForm({ uuid }: Props) {
 
     const [files, setFiles] = React.useState([]);
+    const [loading, setLoading] = React.useState(false);
+    const router = useRouter();
+
 
     // HANDLE UPDATE NEW IMAGE VIA DROP ZONE
     const handleChangeDropZone = (files: File[]) => {
@@ -57,10 +62,21 @@ export default function RoomDetailsForm({ uuid }: Props) {
         initialValues: defaultRoomDetails,
         validationSchema: VALIDATION_SCHEMA,
         onSubmit: async (values) => {
+            setLoading(true);
             const { insert_ts, create_ts, ...rest } = values;
-            await api.post("/room/upsert-room-details",
-                rest
-            );
+            try {
+                const res = await api.post("/room/upsert-room-details",
+                    rest
+                );
+                if (res.status === 200) {
+                    router.push("/property/room-details")
+                }
+            } catch (error) {
+                console.log(error)
+            } finally {
+                setLoading(false);
+            }
+
         }
     });
 
@@ -86,7 +102,7 @@ export default function RoomDetailsForm({ uuid }: Props) {
 
     return (
 
-        <PageWrapper title="Add Room Details">
+        <PageWrapper title={`${uuid ? "Edit" : "Create"} Room Details`}>
             <Card className="p-3">
                 <form onSubmit={handleSubmit}>
                     <Grid container spacing={3}>
@@ -225,6 +241,7 @@ export default function RoomDetailsForm({ uuid }: Props) {
                     </Grid>
                 </form>
             </Card >
+            <LoadingDialog open={loading} />
         </PageWrapper>
 
     );

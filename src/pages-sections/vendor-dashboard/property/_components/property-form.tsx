@@ -3,14 +3,16 @@
 import Card from "@mui/material/Card";
 import Grid from "@mui/material/Grid";
 import CustomStepper from "components/common/custom-stepper";
-import { ILocationResponsePayload } from "components/LocationAutoComplete/LocationAutoComplete";
+import LoadingDialog from "components/Dialogs/LoadingDialog";
 import { useFormik } from "formik";
 import useAuth from "hooks/useAuth";
 import { defaultProperty } from "models/Property.model";
+import { useRouter } from "next/navigation";
+import PageWrapper from "pages-sections/vendor-dashboard/page-wrapper";
 import React, { useState } from "react";
-import * as yup from "yup";
-import { api } from "utils/api";
 import { getPropertyDetails } from "utils/__api__/property";
+import { api } from "utils/api";
+import * as yup from "yup";
 import { PropertyFormButton } from "./form-button";
 import { PropertyFormStepFive } from "./step-five";
 import { PropertyFormStepFour } from "./step-four";
@@ -25,15 +27,18 @@ const VALIDATION_SCHEMA = yup.object().shape({
 
 // ================================================================
 interface Props {
-  propertyId?: string;
+  uuid?: string;
 }
 // ================================================================
 
-export default function PropertyForm({ propertyId }: Props) {
+export default function PropertyForm({ uuid }: Props) {
   const [files, setFiles] = useState([]);
   const { userInfo } = useAuth();
   const steps = ['Description', 'Images', 'Details', 'Location', 'Amenities'];
   const [activeStep, setActiveStep] = React.useState(0);
+  const [loading, setLoading] = React.useState(false);
+  const router = useRouter();
+
 
 
   const {
@@ -47,15 +52,20 @@ export default function PropertyForm({ propertyId }: Props) {
     initialValues: defaultProperty,
     validationSchema: VALIDATION_SCHEMA,
     onSubmit: async (values) => {
+      setLoading(true);
       const { insert_ts, create_ts, ...rest } = values;
-      await api.post("/property/upsert-property",
-        rest,
-        {
-          headers: {
-            "auth-Token": userInfo.token,
-          },
-        }
-      );
+      try {
+        const res = await api.post("/property/update-property",
+          rest          
+        );
+        if (res.status === 200) {
+          router.push("/property/properties")
+      }
+      } catch (error) {
+        console.log(error)
+      } finally {
+        setLoading(false);
+      }
     }
   });
 
@@ -71,20 +81,21 @@ export default function PropertyForm({ propertyId }: Props) {
 
   // fetch the data while editing the form
   React.useEffect(() => {
-    if (propertyId) {
+    if (uuid) {
       const fetchData = async () => {
-        const propertyData = await getPropertyDetails(propertyId);
+        const propertyData = await getPropertyDetails(uuid);
         console.log(propertyData)
         setValues(propertyData);
       };
 
       fetchData();
     }
-  }, [propertyId]);
+  }, [uuid]);
 
 
   return (
-    <>
+    <PageWrapper title={`${uuid ? "Edit" : "Create"} Property`}>
+
       <CustomStepper steps={steps} activeStep={activeStep} />
       <Card className="p-3">
         <form onSubmit={handleSubmit}>
@@ -144,7 +155,8 @@ export default function PropertyForm({ propertyId }: Props) {
           </Grid>
         </form>
       </Card >
-    </>
+      <LoadingDialog open={loading} />
+    </PageWrapper>
 
   );
 }

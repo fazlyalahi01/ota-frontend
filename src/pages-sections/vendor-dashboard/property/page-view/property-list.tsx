@@ -58,7 +58,7 @@ export default function PropertyListView() {
     <PageWrapper title="Property List">
       <SearchArea
         handleSearch={() => {}}
-        buttonText="Add Property"
+        buttonText="Add New"
         url="/property/properties/manage-property"
         searchPlaceholder="Search Property..."
       />

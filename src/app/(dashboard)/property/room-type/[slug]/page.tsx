@@ -10,10 +10,7 @@ export const metadata: Metadata = {
 };
 
 export default function EditRoomType({ params: { slug } }) {
-  console.log(slug)
   return (
-    <PageWrapper title="Edit Product">
-      <RoomTypeForm uuid={slug} />
-    </PageWrapper>
+    <RoomTypeForm uuid={slug} />
   );
 }

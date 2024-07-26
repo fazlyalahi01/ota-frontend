@@ -3,15 +3,7 @@ import duotone from "icons/duotone";
 export const navigation = [
   { type: "label", label: "Admin" },
   { name: "Dashboard", icon: duotone.Dashboard, path: "/property/dashboard" },
-
-  {
-    name: "Properties",
-    icon: duotone.Products,
-    children: [
-      { name: "Properties", path: "/property/properties" },
-      { name: "Create Property", path: "/property/properties/manage-property" },
-    ]
-  },
+  { name: "Properties", icon: duotone.Products, path: "/property/properties" },
   {
     name: "Room",
     icon: duotone.ElementHub,

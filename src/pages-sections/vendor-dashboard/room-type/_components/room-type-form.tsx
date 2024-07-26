@@ -4,15 +4,14 @@ import { Button } from "@mui/material";
 import Card from "@mui/material/Card";
 import Grid from "@mui/material/Grid";
 import { PropertyAutoSearch } from "components/auto-searches/property-auto-search";
+import LoadingDialog from "components/Dialogs/LoadingDialog";
 import CustomFormLabel from "components/form-componet/CustomFormLabel";
 import CustomTextField from "components/form-componet/CustomTextField";
 import { useFormik } from "formik";
-import useAuth from "hooks/useAuth";
-import { defaultProperty } from "models/Property.model";
 import { defaultRoomType } from "models/Room-type.model";
+import { useRouter } from "next/navigation";
 import PageWrapper from "pages-sections/vendor-dashboard/page-wrapper";
 import React from "react";
-import { getPropertyDetails } from "utils/__api__/property";
 import { getRoomTypeDetails } from "utils/__api__/room-type";
 import { api } from "utils/api";
 import * as yup from "yup";
@@ -30,6 +29,8 @@ interface Props {
 // ================================================================
 
 export default function RoomTypeForm({ uuid }: Props) {
+    const [loading, setLoading] = React.useState(false);
+    const router = useRouter()
 
     const {
         values,
@@ -42,10 +43,20 @@ export default function RoomTypeForm({ uuid }: Props) {
         initialValues: defaultRoomType,
         validationSchema: VALIDATION_SCHEMA,
         onSubmit: async (values) => {
+            setLoading(true);
             const { insert_ts, create_ts, ...rest } = values;
-            await api.post("/room/upsert-room-types",
-                rest
-            );
+            try {
+                const res = await api.post("/room/upsert-room-types",
+                    rest
+                );
+                if(res.status === 200){
+                    router.push('/property/room-type')
+                }
+            } catch (error) {
+                console.log(error)
+            } finally {
+                setLoading(false);
+            }
         }
     });
 
@@ -63,7 +74,7 @@ export default function RoomTypeForm({ uuid }: Props) {
 
     return (
 
-        <PageWrapper title="Add Room Type">
+        <PageWrapper title={`${uuid ? "Edit" : "Create"} Room Type`}>
             <Card className="p-3">
                 <form onSubmit={handleSubmit}>
                     <Grid container spacing={3}>
@@ -127,6 +138,7 @@ export default function RoomTypeForm({ uuid }: Props) {
                     </Grid>
                 </form>
             </Card >
+            <LoadingDialog open={loading} />
         </PageWrapper>
 
     );

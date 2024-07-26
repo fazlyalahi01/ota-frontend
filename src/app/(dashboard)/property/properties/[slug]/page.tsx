@@ -11,8 +11,7 @@ export const metadata: Metadata = {
 
 export default function ProductEdit({ params: { slug } }) {
   return (
-    <PageWrapper title="Edit Product">
-      <PropertyForm propertyId={slug} />
-    </PageWrapper>
+    <PropertyForm uuid={slug} />
+
   );
 }

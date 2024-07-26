@@ -48,9 +48,9 @@ export default function ProductRow({ product }: { product: IProperty }) {
           <Edit />
         </StyledIconButton>
 
-        <StyledIconButton>
+        {/* <StyledIconButton>
           <RemoveRedEye />
-        </StyledIconButton>
+        </StyledIconButton> */}
 
         <StyledIconButton>
           <Delete />
