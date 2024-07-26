@@ -1,6 +1,6 @@
 import { Metadata } from "next";
 import PageWrapper from "pages-sections/vendor-dashboard/page-wrapper";
-import PropertyForm from "pages-sections/vendor-dashboard/property/property-form";
+import RoomTypeForm from "pages-sections/vendor-dashboard/room-type/_components/room-type-form";
 
 export const metadata: Metadata = {
   title: "Product - Bazaar Next.js E-commerce Template",
@@ -13,7 +13,7 @@ export default function ProductEdit({ params: {slug} }) {
   console.log(slug)
   return (
     <PageWrapper title="Edit Product">
-      <PropertyForm propertyId={slug} />
+      <RoomTypeForm uuid={slug} />
     </PageWrapper>
   );
 }

@@ -44,7 +44,7 @@ export default function RoomTypeTableRow({ item }: { item: IRoomType }) {
       <StyledTableCell align="left">{status || "--"}</StyledTableCell>
 
       <StyledTableCell align="center">
-        <StyledIconButton onClick={() => router.push(`/property/properties/${room_types_uuid}`)}>
+        <StyledIconButton onClick={() => router.push(`/property/room-type/${room_types_uuid}`)}>
           <Edit />
         </StyledIconButton>
 

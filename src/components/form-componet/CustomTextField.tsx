@@ -13,10 +13,13 @@ const CustomTextField = styled((props: TextFieldProps) => (
     borderColor: theme.palette.mode === "dark" ? "#fff" : "##E7E7E7", 
   },
   '&:hover .MuiOutlinedInput-notchedOutline': {
-    borderColor: theme.palette.primary.dark, 
+    borderColor: theme.palette.info.dark, 
   },
   '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
-    borderColor: theme.palette.primary.light, 
+    borderColor: theme.palette.info.light, 
+  },
+  '&.Mui-focused:not(:hover) .MuiOutlinedInput-notchedOutline': {
+    borderColor: theme.palette.info.light, 
   },
   '& .MuiInputLabel-root': {
     color: theme.palette.mode === "dark" ? "#fff" : "#000", 
