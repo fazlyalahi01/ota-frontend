@@ -19,6 +19,7 @@ import PageWrapper from "pages-sections/vendor-dashboard/page-wrapper";
 import { StyledClear, UploadImageBox } from "pages-sections/vendor-dashboard/styles";
 import React from "react";
 import { getRoomDetails } from "utils/__api__/room-details";
+import { IFileUpload, uploadMultipleFile } from "utils/_helpers_/file-upload";
 import { api } from "utils/api";
 import * as yup from "yup";
 
@@ -35,21 +36,32 @@ interface Props {
 
 export default function RoomDetailsForm({ uuid }: Props) {
 
-    const [files, setFiles] = React.useState([]);
+    const [files, setFiles] = React.useState<IFileUpload[]>([]);
     const [loading, setLoading] = React.useState(false);
     const router = useRouter();
 
 
     // HANDLE UPDATE NEW IMAGE VIA DROP ZONE
     const handleChangeDropZone = (files: File[]) => {
-        files.forEach((file) => Object.assign(file, { preview: URL.createObjectURL(file) }));
-        setFiles(files);
+        console.log(files)
+        // files.forEach((file) => Object.assign(file, { preview: URL.createObjectURL(file) }));
+        files.forEach((file: File) => {
+            console.log(file)
+            setFiles((prevFiles) => [...prevFiles,
+            {
+                key: file.name,
+                path: (file as any).path,
+                file: file
+            }]);
+        })
     };
 
     // HANDLE DELETE UPLOAD IMAGE
     const handleFileDelete = (file: File) => () => {
         setFiles((files) => files.filter((item) => item.name !== file.name));
     };
+
+    console.log(files, "files")
 
     const {
         values,
@@ -63,14 +75,22 @@ export default function RoomDetailsForm({ uuid }: Props) {
         validationSchema: VALIDATION_SCHEMA,
         onSubmit: async (values) => {
             setLoading(true);
+
             const { insert_ts, create_ts, ...rest } = values;
             try {
+                if (files.length > 0) {
+                    console.log("inside file upload")
+                    const asPayload = {
+                        project_name: values.room_types_name,
+                    };
+                    const res = await uploadMultipleFile(files, "PROJECT", asPayload)
+                }
                 const res = await api.post("/room/upsert-room-details",
                     rest
                 );
-                if (res.status === 200) {
-                    router.push("/property/room-details")
-                }
+                // if (res.status === 200) {
+                //     router.push("/property/room-details")
+                // }
             } catch (error) {
                 console.log(error)
             } finally {
@@ -225,11 +245,10 @@ export default function RoomDetailsForm({ uuid }: Props) {
 
                             <FlexBox flexDirection="row" mt={2} flexWrap="wrap" gap={1}>
                                 {files.map((file, index) => {
-                                    console.log(file, file.preview)
                                     return (
                                         <UploadImageBox key={index}>
-                                            <Box component="img" alt="product" src={file.preview} width="100%" />
-                                            <StyledClear onClick={handleFileDelete(file)} />
+                                            <Box component="img" alt="product" src={file} width="100%" />
+                                            {/* <StyledClear onClick={handleFileDelete(file)} /> */}
                                         </UploadImageBox>
                                     );
                                 })}
