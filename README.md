@@ -23,7 +23,8 @@ pnpm dev
             - **admin**: super admin
             - **property**: vendor
         - **(main)**
-    - **components**: Commonly used components across the application.
+    - **components**: Commonly used components
+        - **layouts**
     - **constants**: Holds all constant values used in the project.
     - **contexts**: Contains context providers for state management.
     - **hooks**: Custom React hooks for reusable logic.
