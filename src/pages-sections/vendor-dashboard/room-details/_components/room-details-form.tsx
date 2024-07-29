@@ -7,6 +7,8 @@ import { PropertyAutoSearch } from "components/auto-searches/property-auto-searc
 import { RoomTypeAutoSearch } from "components/auto-searches/room-type-auto-search";
 import LoadingDialog from "components/Dialogs/LoadingDialog";
 import DropZone from "components/DropZone";
+import { FileUpload } from "components/FileUpload/FileUpload";
+import { uploadMultipleFile } from "components/FileUpload/utils";
 import { FlexBox } from "components/flex-box";
 import { CustomCheckbox } from "components/form-componet/custom-checkbox";
 import CustomFormLabel from "components/form-componet/CustomFormLabel";
@@ -19,7 +21,6 @@ import PageWrapper from "pages-sections/vendor-dashboard/page-wrapper";
 import { StyledClear, UploadImageBox } from "pages-sections/vendor-dashboard/styles";
 import React from "react";
 import { getRoomDetails } from "utils/__api__/room-details";
-import { IFileUpload, uploadMultipleFile } from "utils/_helpers_/file-upload";
 import { api } from "utils/api";
 import * as yup from "yup";
 
@@ -35,33 +36,8 @@ interface Props {
 // ================================================================
 
 export default function RoomDetailsForm({ uuid }: Props) {
-
-    const [files, setFiles] = React.useState<IFileUpload[]>([]);
     const [loading, setLoading] = React.useState(false);
     const router = useRouter();
-
-
-    // HANDLE UPDATE NEW IMAGE VIA DROP ZONE
-    const handleChangeDropZone = (files: File[]) => {
-        console.log(files)
-        // files.forEach((file) => Object.assign(file, { preview: URL.createObjectURL(file) }));
-        files.forEach((file: File) => {
-            console.log(file)
-            setFiles((prevFiles) => [...prevFiles,
-            {
-                key: file.name,
-                path: (file as any).path,
-                file: file
-            }]);
-        })
-    };
-
-    // HANDLE DELETE UPLOAD IMAGE
-    const handleFileDelete = (file: File) => () => {
-        setFiles((files) => files.filter((item) => item.name !== file.name));
-    };
-
-    console.log(files, "files")
 
     const {
         values,
@@ -78,13 +54,15 @@ export default function RoomDetailsForm({ uuid }: Props) {
 
             const { insert_ts, create_ts, ...rest } = values;
             try {
-                if (files.length > 0) {
-                    console.log("inside file upload")
-                    const asPayload = {
-                        project_name: values.room_types_name,
-                    };
-                    const res = await uploadMultipleFile(files, "PROJECT", asPayload)
-                }
+                const asPayload = {
+                    invoice_id: values.room_types_uuid,
+                };
+                const { paths } = await uploadMultipleFile(
+                    values.room_images || [],
+                    "ACCOUNTING",
+                    asPayload
+                );
+                console.log(paths)
                 const res = await api.post("/room/upsert-room-details",
                     rest
                 );
@@ -99,6 +77,8 @@ export default function RoomDetailsForm({ uuid }: Props) {
 
         }
     });
+
+    console.log(values)
 
     const handleAmenitiesCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const { name, checked } = event.target;
@@ -236,7 +216,7 @@ export default function RoomDetailsForm({ uuid }: Props) {
                                 onChange={handleChange}
                             />
                         </Grid>
-                        <Grid item xs={12}>
+                        {/* <Grid item xs={12}>
                             <DropZone
                                 title="Drag and drop property images"
                                 imageSize="Recommended size 600*500px"
@@ -248,12 +228,24 @@ export default function RoomDetailsForm({ uuid }: Props) {
                                     return (
                                         <UploadImageBox key={index}>
                                             <Box component="img" alt="product" src={file} width="100%" />
-                                            {/* <StyledClear onClick={handleFileDelete(file)} /> */}
+                                            {/* <StyledClear onClick={handleFileDelete(file)} /> 
                                         </UploadImageBox>
                                     );
                                 })}
                             </FlexBox>
+                        </Grid> */}
+                        <Grid item xs={12} />
+                        <Grid item xs={12}>
+                            <Grid item xs={12} lg={4}>
+                                <FileUpload
+                                    multiple
+                                    value={values.room_images || []}
+                                    heading="Attachments"
+                                    onMultiChange={(data) => setFieldValue("room_images", data)}
+                                />
+                            </Grid>
                         </Grid>
+
                         <Grid item xs={12}>
                             <Button variant="contained" type="submit" color="info">Submit</Button>
                         </Grid>

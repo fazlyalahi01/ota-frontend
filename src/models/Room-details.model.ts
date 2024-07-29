@@ -1,3 +1,4 @@
+import { IFileUpload } from "utils/_helpers_/file-upload";
 
 export interface IRoomDetails {
     room_details_uuid: string | null;
@@ -5,7 +6,7 @@ export interface IRoomDetails {
     room_types_name: string | null;
     property_details_uuid: string | null;
     property_details_name: string | null;
-    room_images: string[];
+    room_images: IFileUpload[] | null;
     room_area: string | null;
     bed_type: string | null;
     view_type: string | null;
