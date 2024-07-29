@@ -1,30 +1,47 @@
+import { Dashboard, Home, Hotel, Store } from "@mui/icons-material";
 import duotone from "icons/duotone";
 
 export const navigation = [
-  { type: "label", label: "Admin" },
-  { name: "Dashboard", icon: duotone.Dashboard, path: "/property/dashboard" },
-  { name: "Properties", icon: duotone.Products, path: "/property/properties" },
+  {
+    type: "label",
+    label: "Admin"
+  },
+  {
+    name: "Dashboard",
+    icon: Dashboard,
+    path: "/property/dashboard"
+  },
+  {
+    name: "Properties",
+    icon: Home,
+    path: "/property/properties"
+  },
   {
     name: "Room",
-    icon: duotone.ElementHub,
+    icon: Hotel,
     children: [
-      { name: "Room Type", path: "/property/room-type" },
-      { name: "Room Details", path: "/property/room-details" },
+      {
+        name: "Room Type",
+        path: "/property/room-type"
+      },
+      {
+        name: "Room Details",
+        path: "/property/room-details"
+      },
     ]
   },
-
   {
-    name: "Categories",
-    icon: duotone.Accounts,
-    children: [
-      { name: "Category List", path: "/admin/categories" },
-      { name: "Create Category", path: "/admin/categories/create" }
-    ]
+    name: "Inventory",
+    icon: Store,
+    path: "/property/inventory"
   },
 
 
-
-  { type: "label", label: "User Preference" },
+  // new section
+  {
+    type: "label",
+    label: "User Preference"
+  },
   {
     name: "Account Settings",
     icon: duotone.AccountSetting,
